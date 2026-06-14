@@ -668,6 +668,122 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* =====================================================
+   WELCOME SCREEN
+===================================================== */
+#welcomeScreen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+}
+#welcomeCard {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 24px;
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 440px;
+  text-align: center;
+  box-shadow: 0 24px 64px rgba(0,0,0,.5);
+  animation: wcSlideIn .6s cubic-bezier(.4,0,.2,1);
+}
+@keyframes wcSlideIn {
+  from { opacity:0; transform:translateY(32px) scale(.96); }
+  to   { opacity:1; transform:translateY(0) scale(1); }
+}
+#wc-logo {
+  width: 72px; height: 72px;
+  background: linear-gradient(135deg, #2563eb, #db2777);
+  border-radius: 20px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; color: #fff;
+  margin: 0 auto 20px;
+  box-shadow: 0 8px 24px rgba(37,99,235,.4);
+}
+#wc-title {
+  font-size: 2.2rem; font-weight: 800;
+  background: linear-gradient(135deg, #60a5fa, #f472b6);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 6px;
+}
+#wc-sub {
+  font-size: .9rem; color: rgba(255,255,255,.5);
+  margin-bottom: 32px; letter-spacing: .3px;
+}
+#wc-prompt {
+  font-size: 1rem; font-weight: 600; color: rgba(255,255,255,.85);
+  margin-bottom: 14px; font-family: 'Cairo', sans-serif;
+}
+#wc-input-wrap {
+  position: relative; margin-bottom: 18px;
+}
+#wc-input-wrap i {
+  position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+  color: rgba(255,255,255,.4); font-size: 1rem;
+}
+#studentNameInput {
+  width: 100%;
+  padding: 14px 18px 14px 44px;
+  background: rgba(255,255,255,.08);
+  border: 1.5px solid rgba(255,255,255,.15);
+  border-radius: 12px;
+  color: #fff;
+  font-family: 'Cairo', 'Inter', sans-serif;
+  font-size: 1.05rem;
+  outline: none;
+  transition: border-color .2s, background .2s;
+  text-align: right;
+  direction: rtl;
+}
+#studentNameInput::placeholder { color: rgba(255,255,255,.3); }
+#studentNameInput:focus {
+  border-color: #3b82f6;
+  background: rgba(255,255,255,.12);
+}
+#wc-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-family: 'Cairo', 'Inter', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  transition: transform .2s, box-shadow .2s;
+  box-shadow: 0 6px 20px rgba(37,99,235,.45);
+  margin-bottom: 24px;
+  direction: rtl;
+}
+#wc-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(37,99,235,.55); }
+#wc-btn:active { transform: translateY(0); }
+#wc-error {
+  color: #f87171;
+  font-size: .88rem;
+  margin-top: -12px;
+  margin-bottom: 14px;
+  display: none;
+  font-family: 'Cairo', sans-serif;
+}
+#wc-footer {
+  font-size: .8rem; color: rgba(255,255,255,.35);
+  margin-top: 0;
+}
+#wc-footer a { color: #f472b6; text-decoration: none; }
+#wc-footer a:hover { text-decoration: underline; }
+
+#appWrapper { display: flex; width: 100%; height: 100%; overflow: hidden; }
+
+/* =====================================================
    RESPONSIVE
 ===================================================== */
 @media (max-width: 900px) {
@@ -694,6 +810,30 @@ a { text-decoration: none; color: inherit; }
 </style>
 </head>
 <body>
+
+<!-- ── WELCOME SCREEN ── -->
+<div id="welcomeScreen">
+  <div id="welcomeCard">
+    <div id="wc-logo">
+      <i class="fa-solid fa-graduation-cap"></i>
+    </div>
+    <h1 id="wc-title">CommHub</h1>
+    <p id="wc-sub">Communication Skills &bull; COMM 101</p>
+    <p id="wc-prompt">&#x0623;&#x062f;&#x062e;&#x0644; &#x0627;&#x0633;&#x0645;&#x0643; &#x0644;&#x0644;&#x0628;&#x062f;&#x0621;</p>
+    <div id="wc-input-wrap">
+      <i class="fa-solid fa-user"></i>
+      <input type="text" id="studentNameInput" maxlength="50" placeholder="&#x0645;&#x062b;&#x0627;&#x0644;: &#x0645;&#x062d;&#x0645;&#x062f; &#x0639;&#x0644;&#x064a;">
+    </div>
+    <button id="wc-btn" onclick="enterPlatform()">
+      <span>&#x0627;&#x062f;&#x062e;&#x0644; &#x0627;&#x0644;&#x0645;&#x0646;&#x0635;&#x0629;</span>
+      <i class="fa-solid fa-arrow-right"></i>
+    </button>
+    <p id="wc-footer">&#x0645;&#x0639;&#x0632; &nbsp;<i class="fa-brands fa-instagram" style="color:#e1306c"></i>&nbsp;<a href="https://instagram.com/mvii3.a" target="_blank" style="color:#e1306c">mvii3.a</a></p>
+  </div>
+</div>
+
+<!-- ── APP WRAPPER (hidden until login) ── -->
+<div id="appWrapper" style="display:none; width:100%; height:100%; display:none;">
 
 <!-- ── SIDEBAR OVERLAY ── -->
 <div id="sidebarOverlay" onclick="closeSidebar()"></div>
@@ -737,10 +877,11 @@ a { text-decoration: none; color: inherit; }
         <span data-i18n="user_course">Communication Skills</span>
       </div>
     </div>
-    <div style="text-align:center; font-size:0.8rem; color:var(--text-muted); padding-top:10px; border-top:1px solid var(--border);">
-      <span data-i18n="dev_credit">Developed by <strong>Moaz</strong></span>
-      <a href="https://instagram.com/mo3az" target="_blank" style="color:var(--pink); margin-left:6px; font-size:1.1rem; vertical-align:middle;" title="Instagram">
+    <div style="text-align:center; font-size:0.85rem; color:var(--text-muted); padding-top:10px; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:center; gap:8px;">
+      <span style="font-weight:700; color:var(--text);">معز</span>
+      <a href="https://instagram.com/mvii3.a" target="_blank" style="color:var(--pink); font-size:1.1rem; display:flex; align-items:center; gap:4px; font-weight:600; text-decoration:none;" title="Instagram @mvii3.a">
         <i class="fa-brands fa-instagram"></i>
+        <span style="font-size:0.78rem;">mvii3.a</span>
       </a>
     </div>
   </div>
@@ -953,6 +1094,8 @@ a { text-decoration: none; color: inherit; }
   </div><!-- /contentScroll -->
 </div><!-- /mainArea -->
 
+</div><!-- /appWrapper -->
+
 <!-- POMODORO TIMER -->
 <div id="timerModal">
   <div class="timer-head">
@@ -990,7 +1133,7 @@ const T = {
   en: {
     nav_section_main: 'Main', nav_section_modules: 'Modules', nav_section_exams: 'Exams',
     nav_dashboard: 'Dashboard', nav_final: 'Final Exam', nav_expected_exam: 'Expected Qs Exam',
-    dev_credit: 'Developed by <strong>Moaz</strong>', expected_exam_h1: 'Expected Questions Exam', expected_exam_sub: 'This exam contains ONLY the questions highly expected by the professor. Focus on these!',
+    dev_credit: 'Moaz', expected_exam_h1: 'Expected Questions Exam', expected_exam_sub: 'This exam contains ONLY the questions highly expected by the professor. Focus on these!',
     user_name: 'University Student', user_course: 'Communication Skills',
     course_code: 'COMM 101',
     dash_h1: 'Master Communication Skills',
@@ -1017,7 +1160,7 @@ const T = {
   ar: {
     nav_section_main: 'الرئيسية', nav_section_modules: 'الوحدات', nav_section_exams: 'الامتحانات',
     nav_dashboard: 'لوحة القيادة', nav_final: 'الامتحان النهائي', nav_expected_exam: 'امتحان المتوقعة',
-    dev_credit: 'تطوير المبرمج <strong>معز</strong>', expected_exam_h1: 'امتحان الأسئلة المتوقعة الشامل', expected_exam_sub: 'هذا الامتحان يحتوي فقط على الأسئلة التي ركزت عليها الدكتورة والمتوقعة بنسبة كبيرة في الامتحان.',
+    dev_credit: 'معز', expected_exam_h1: 'امتحان الأسئلة المتوقعة الشامل', expected_exam_sub: 'هذا الامتحان يحتوي فقط على الأسئلة التي ركزت عليها الدكتورة والمتوقعة بنسبة كبيرة في الامتحان.',
     user_name: 'طالب جامعي', user_course: 'مهارات التواصل',
     course_code: 'COMM 101',
     dash_h1: 'أتقن مهارات التواصل',
@@ -1517,6 +1660,60 @@ function toggleTimer() {
 // ─────────────────────────────────────────
 //  BOOT
 // ─────────────────────────────────────────
+// ─────────────────────────────────────────
+//  WELCOME SCREEN
+// ─────────────────────────────────────────
+function enterPlatform() {
+  const nameInput = $('#studentNameInput');
+  const name = nameInput ? nameInput.value.trim() : '';
+
+  // Show error if name is empty
+  let errEl = $('#wc-error');
+  if (!errEl) {
+    errEl = document.createElement('p');
+    errEl.id = 'wc-error';
+    errEl.textContent = 'الرجاء كتابة اسمك أولاً';
+    $('#wc-btn').before(errEl);
+  }
+
+  if (!name) {
+    errEl.style.display = 'block';
+    nameInput.focus();
+    return;
+  }
+
+  errEl.style.display = 'none';
+  localStorage.setItem('ch-student-name', name);
+
+  // Animate out welcome screen
+  const ws = $('#welcomeScreen');
+  ws.style.transition = 'opacity .4s ease, transform .4s ease';
+  ws.style.opacity = '0';
+  ws.style.transform = 'scale(1.04)';
+  setTimeout(() => {
+    ws.style.display = 'none';
+    const app = $('#appWrapper');
+    app.style.display = 'flex';
+    // Update user card name
+    $$('.user-info p').forEach(el => { el.textContent = name; });
+  }, 400);
+}
+
+// Allow Enter key to submit
+document.addEventListener('DOMContentLoaded', () => {
+  const inp = $('#studentNameInput');
+  if (inp) inp.addEventListener('keydown', e => { if (e.key === 'Enter') enterPlatform(); });
+
+  // If already logged in, skip welcome screen
+  const savedName = localStorage.getItem('ch-student-name');
+  if (savedName) {
+    $('#welcomeScreen').style.display = 'none';
+    const app = $('#appWrapper');
+    app.style.display = 'flex';
+    $$('.user-info p').forEach(el => { el.textContent = savedName; });
+  }
+});
+
 window.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
