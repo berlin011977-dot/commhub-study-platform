@@ -670,14 +670,27 @@ a { text-decoration: none; color: inherit; }
 /* ─── DEVICE‑SPECIFIC STYLING ─── */
 /* iPhone – glass‑morphism (Safari supports -webkit-backdrop-filter) */
 @media screen and (max-width: 600px) and (hover: none) and (pointer: coarse) {
-  body.ios-glass .sidebar, body.ios-glass .hero, body.ios-glass .card {
-    background: rgba(255,255,255,.07) !important;
-    backdrop-filter: blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
-    border: 1px solid rgba(255,255,255,.12) !important;
+  /* Dark Theme Glass */
+  [data-theme="dark"] body.ios-glass .sidebar, 
+  [data-theme="dark"] body.ios-glass .card {
+    background: rgba(255,255,255,.05) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(255,255,255,.1) !important;
   }
+  /* Light Theme Glass */
+  [data-theme="light"] body.ios-glass .sidebar, 
+  [data-theme="light"] body.ios-glass .card,
+  body.ios-glass .sidebar, 
+  body.ios-glass .card {
+    background: rgba(255,255,255,.7) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(0,0,0,.05) !important;
+  }
+  
   body.ios-glass .sidebar {
-    box-shadow: 0 8px 24px rgba(0,0,0,.3) !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,.15) !important;
   }
 }
 
