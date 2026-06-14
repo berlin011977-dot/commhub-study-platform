@@ -667,6 +667,42 @@ a { text-decoration: none; color: inherit; }
   z-index: 90;
 }
 
+/* ─── DEVICE‑SPECIFIC STYLING ─── */
+/* iPhone – glass‑morphism (Safari supports -webkit-backdrop-filter) */
+@media screen and (max-width: 600px) and (hover: none) and (pointer: coarse) {
+  body.ios-glass .sidebar, body.ios-glass .hero, body.ios-glass .card {
+    background: rgba(255,255,255,.07) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255,255,255,.12) !important;
+  }
+  body.ios-glass .sidebar {
+    box-shadow: 0 8px 24px rgba(0,0,0,.3) !important;
+  }
+}
+
+/* Android – keep current solid look but add subtle elevation */
+body.android .sidebar {
+  box-shadow: 0 4px 12px rgba(0,0,0,.25);
+}
+
+/* Desktop – richer gradients & neumorphic accents */
+@media screen and (min-width: 901px) {
+  .hero {
+    background: linear-gradient(135deg, #1e3a8a 0%, #7e22ce 100%);
+    border-radius: 16px;
+    box-shadow: 0 12px 36px rgba(0,0,0,.35);
+  }
+  .card {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 8px 24px rgba(0,0,0,.25);
+    border-radius: 20px;
+  }
+}
+
 /* =====================================================
    WELCOME SCREEN
 ===================================================== */
@@ -781,7 +817,7 @@ a { text-decoration: none; color: inherit; }
 #wc-footer a { color: #f472b6; text-decoration: none; }
 #wc-footer a:hover { text-decoration: underline; }
 
-#appWrapper { display: flex; width: 100%; height: 100%; overflow: hidden; }
+#appWrapper { display: none; width: 100%; height: 100%; overflow: hidden; }
 
 /* =====================================================
    RESPONSIVE
@@ -833,7 +869,7 @@ a { text-decoration: none; color: inherit; }
 </div>
 
 <!-- ── APP WRAPPER (hidden until login) ── -->
-<div id="appWrapper" style="display:none; width:100%; height:100%; display:none;">
+<div id="appWrapper">
 
 <!-- ── SIDEBAR OVERLAY ── -->
 <div id="sidebarOverlay" onclick="closeSidebar()"></div>
@@ -871,18 +907,23 @@ a { text-decoration: none; color: inherit; }
 
   <div class="sidebar-footer">
     <div class="user-card" style="margin-bottom:12px;">
-      <div class="user-avatar">S</div>
+      <div class="user-avatar" id="sidebarAvatar">S</div>
       <div class="user-info">
-        <p data-i18n="user_name">University Student</p>
+        <p id="sidebarStudentName" data-i18n="user_name">University Student</p>
         <span data-i18n="user_course">Communication Skills</span>
       </div>
     </div>
-    <div style="text-align:center; font-size:0.85rem; color:var(--text-muted); padding-top:10px; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:center; gap:8px;">
-      <span style="font-weight:700; color:var(--text);">معز</span>
-      <a href="https://instagram.com/mvii3.a" target="_blank" style="color:var(--pink); font-size:1.1rem; display:flex; align-items:center; gap:4px; font-weight:600; text-decoration:none;" title="Instagram @mvii3.a">
-        <i class="fa-brands fa-instagram"></i>
-        <span style="font-size:0.78rem;">mvii3.a</span>
-      </a>
+    <div style="display:flex; align-items:center; justify-content:space-between; padding-top:10px; border-top:1px solid var(--border);">
+      <div style="display:flex; align-items:center; gap:6px;">
+        <span style="font-weight:700; color:var(--text); font-size:0.85rem;">معز</span>
+        <a href="https://instagram.com/mvii3.a" target="_blank" style="color:var(--pink); font-size:1rem; display:flex; align-items:center; gap:4px; font-weight:600; text-decoration:none;" title="Instagram @mvii3.a">
+          <i class="fa-brands fa-instagram"></i>
+          <span style="font-size:0.75rem;">mvii3.a</span>
+        </a>
+      </div>
+      <button onclick="changeStudentName()" title="تغيير الاسم" style="background:none; border:1px solid var(--border); border-radius:8px; padding:4px 8px; color:var(--text-muted); cursor:pointer; font-size:0.75rem; transition:all .2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'">
+        <i class="fa-solid fa-pen"></i>
+      </button>
     </div>
   </div>
 </aside>
@@ -924,6 +965,25 @@ a { text-decoration: none; color: inherit; }
         <span class="hero-badge" data-i18n="course_code">COMM 101</span>
         <h1 data-i18n="dash_h1">Master Communication Skills</h1>
         <p data-i18n="dash_sub">A premium bilingual study platform — covering Lectures 3, 4, 5, and 6-7 with interactive quizzes, flashcards, and exam prep tools.</p>
+      </div>
+
+      <!-- EXAM COUNTDOWN BANNER -->
+      <div id="examCountdownBanner" style="background:linear-gradient(135deg, #10b981 0%, #059669 100%); color:white; border-radius:16px; padding:20px; margin-bottom:24px; text-align:center; box-shadow:0 8px 24px rgba(16, 185, 129, 0.3);">
+        <h2 style="font-size:1.4rem; font-weight:800; margin-bottom:12px;"><i class="fa-solid fa-stopwatch" style="margin-inline-end:8px;"></i><span data-i18n="countdown_title">Final Exam Countdown</span></h2>
+        <div id="examCountdown" style="display:flex; justify-content:center; gap:16px; font-family:'Inter', sans-serif;">
+          <div style="background:rgba(255,255,255,0.2); padding:10px 16px; border-radius:12px; min-width:70px;">
+            <div id="cd-hours" style="font-size:2rem; font-weight:800; line-height:1;">00</div>
+            <div data-i18n="cd_hours" style="font-size:0.8rem; opacity:0.9; margin-top:4px;">Hours</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.2); padding:10px 16px; border-radius:12px; min-width:70px;">
+            <div id="cd-minutes" style="font-size:2rem; font-weight:800; line-height:1;">00</div>
+            <div data-i18n="cd_minutes" style="font-size:0.8rem; opacity:0.9; margin-top:4px;">Mins</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.2); padding:10px 16px; border-radius:12px; min-width:70px;">
+            <div id="cd-seconds" style="font-size:2rem; font-weight:800; line-height:1;">00</div>
+            <div data-i18n="cd_seconds" style="font-size:0.8rem; opacity:0.9; margin-top:4px;">Secs</div>
+          </div>
+        </div>
       </div>
 
       <div class="stats-row">
@@ -1136,6 +1196,7 @@ const T = {
     dev_credit: 'Moaz', expected_exam_h1: 'Expected Questions Exam', expected_exam_sub: 'This exam contains ONLY the questions highly expected by the professor. Focus on these!',
     user_name: 'University Student', user_course: 'Communication Skills',
     course_code: 'COMM 101',
+    countdown_title: 'Final Exam Countdown', cd_hours: 'Hours', cd_minutes: 'Mins', cd_seconds: 'Secs',
     dash_h1: 'Master Communication Skills',
     dash_sub: 'A premium bilingual study platform — covering Lectures 3, 4, 5, and 6-7 with interactive quizzes, flashcards, and exam prep tools.',
     stat_lec: 'Lectures', stat_score: 'Avg. Score', stat_streak: 'Streak',
@@ -1163,6 +1224,7 @@ const T = {
     dev_credit: 'معز', expected_exam_h1: 'امتحان الأسئلة المتوقعة الشامل', expected_exam_sub: 'هذا الامتحان يحتوي فقط على الأسئلة التي ركزت عليها الدكتورة والمتوقعة بنسبة كبيرة في الامتحان.',
     user_name: 'طالب جامعي', user_course: 'مهارات التواصل',
     course_code: 'COMM 101',
+    countdown_title: 'متبقي على الامتحان النهائي', cd_hours: 'ساعات', cd_minutes: 'دقائق', cd_seconds: 'ثواني',
     dash_h1: 'أتقن مهارات التواصل',
     dash_sub: 'منصة دراسية ثنائية اللغة - تغطي المحاضرات 3 و4 و5 و6-7 مع اختبارات تفاعلية وبطاقات دراسية وأدوات الاستعداد للامتحان.',
     stat_lec: 'المحاضرات', stat_score: 'متوسط الدرجات', stat_streak: 'أيام متتالية',
@@ -1582,6 +1644,104 @@ function buildExpectedExam() {
     $('#contentScroll').scrollTop = $('#contentScroll').scrollHeight;
   };
 }
+
+// ─────────────────────────────────────────
+//  EXAM COUNTDOWN & WELCOME SCREEN
+// ─────────────────────────────────────────
+function initCountdown() {
+  const examDate = new Date("2026-06-15T11:00:00+03:00").getTime();
+  const updateCd = () => {
+    const now = new Date().getTime();
+    const dist = examDate - now;
+    if (dist < 0) {
+      const banner = $('#examCountdownBanner');
+      if (banner) banner.style.display = 'none';
+      return;
+    }
+    const h = Math.floor(dist / (1000 * 60 * 60));
+    const m = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
+    const s = Math.floor((dist % (1000 * 60)) / 1000);
+    
+    const elH = $('#cd-hours'); if (elH) elH.textContent = h.toString().padStart(2, '0');
+    const elM = $('#cd-minutes'); if (elM) elM.textContent = m.toString().padStart(2, '0');
+    const elS = $('#cd-seconds'); if (elS) elS.textContent = s.toString().padStart(2, '0');
+  };
+  updateCd();
+  setInterval(updateCd, 1000);
+}
+
+function updateSidebarName(name) {
+  const av = $('#sidebarAvatar');
+  const nm = $('#sidebarStudentName');
+  if (av) av.textContent = name.charAt(0).toUpperCase();
+  if (nm) nm.textContent = name;
+  $$('.user-info p').forEach(el => { el.textContent = name; });
+}
+
+function enterPlatform() {
+  const nameInput = $('#studentNameInput');
+  const name = nameInput ? nameInput.value.trim() : '';
+
+  let errEl = $('#wc-error');
+  if (!errEl) {
+    errEl = document.createElement('p');
+    errEl.id = 'wc-error';
+    errEl.style.cssText = 'color:#f87171;font-size:.88rem;margin-bottom:10px;font-family:Cairo,sans-serif;';
+    errEl.textContent = 'الرجاء كتابة اسمك أولاً';
+    $('#wc-btn').insertAdjacentElement('beforebegin', errEl);
+  }
+
+  if (!name) {
+    errEl.style.display = 'block';
+    if (nameInput) nameInput.focus();
+    return;
+  }
+
+  errEl.style.display = 'none';
+  localStorage.setItem('ch-student-name', name);
+  updateSidebarName(name);
+
+  const ws = $('#welcomeScreen');
+  ws.style.transition = 'opacity .4s ease, transform .4s ease';
+  ws.style.opacity = '0';
+  ws.style.transform = 'scale(1.04)';
+  setTimeout(() => {
+    ws.style.display = 'none';
+    $('#appWrapper').style.display = 'flex';
+  }, 400);
+}
+
+function changeStudentName() {
+  localStorage.removeItem('ch-student-name');
+  $('#appWrapper').style.display = 'none';
+  const ws = $('#welcomeScreen');
+  ws.style.cssText = 'position:fixed;inset:0;background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 50%,#0f172a 100%);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;opacity:1;transform:scale(1);';
+  const inp = $('#studentNameInput');
+  if (inp) { inp.value = ''; setTimeout(() => inp.focus(), 100); }
+}
+
+// Boot logic
+document.addEventListener('DOMContentLoaded', () => {
+  const inp = $('#studentNameInput');
+  if (inp) inp.addEventListener('keydown', e => { if (e.key === 'Enter') enterPlatform(); });
+
+  const ua = navigator.userAgent || navigator.vendor || window.opera;
+  if (/iPad|iPhone|iPod/.test(ua) && !window.MSStream) document.body.classList.add('ios-glass');
+  else if (/Android/.test(ua)) document.body.classList.add('android');
+  else document.body.classList.add('desktop');
+
+  const savedName = localStorage.getItem('ch-student-name');
+  if (savedName) {
+    $('#welcomeScreen').style.display = 'none';
+    $('#appWrapper').style.display = 'flex';
+    updateSidebarName(savedName);
+  } else {
+    $('#welcomeScreen').style.display = 'flex';
+    $('#appWrapper').style.display = 'none';
+  }
+  
+  initCountdown();
+});
 
 // ─────────────────────────────────────────
 //  THEME / LANG
