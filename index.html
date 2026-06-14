@@ -708,15 +708,25 @@ a { text-decoration: none; color: inherit; }
       <i class="fa-solid fa-trophy ni-icon" style="color:#d97706"></i>
       <span data-i18n="nav_final">Final Exam</span>
     </button>
+    <button class="nav-item" id="nav-expected-exam" onclick="showPage('expected_exam',this); buildExpectedExam();">
+      <i class="fa-solid fa-star ni-icon" style="color:var(--pink)"></i>
+      <span data-i18n="nav_expected_exam">Expected Qs Exam</span>
+    </button>
   </nav>
 
   <div class="sidebar-footer">
-    <div class="user-card">
+    <div class="user-card" style="margin-bottom:12px;">
       <div class="user-avatar">S</div>
       <div class="user-info">
         <p data-i18n="user_name">University Student</p>
         <span data-i18n="user_course">Communication Skills</span>
       </div>
+    </div>
+    <div style="text-align:center; font-size:0.8rem; color:var(--text-muted); padding-top:10px; border-top:1px solid var(--border);">
+      <span data-i18n="dev_credit">Developed by <strong>Moaz</strong></span>
+      <a href="https://instagram.com/mo3az" target="_blank" style="color:var(--pink); margin-left:6px; font-size:1.1rem; vertical-align:middle;" title="Instagram">
+        <i class="fa-brands fa-instagram"></i>
+      </a>
     </div>
   </div>
 </aside>
@@ -891,6 +901,23 @@ a { text-decoration: none; color: inherit; }
       </div>
     </div>
 
+    <!-- ══════════════ EXPECTED EXAM ══════════════ -->
+    <div id="page-expected_exam" class="page">
+      <div class="hero" style="background: linear-gradient(135deg, #db2777 0%, #9d174d 100%); margin-bottom:28px; text-align:center;">
+        <i class="fa-solid fa-star" style="font-size:2.5rem; opacity:.8; margin-bottom:12px; display:block;"></i>
+        <h1 data-i18n="expected_exam_h1">Expected Questions Exam</h1>
+        <p data-i18n="expected_exam_sub">This exam contains ONLY the questions highly expected by the professor. Focus on these!</p>
+      </div>
+      <div id="expectedExamBox"></div>
+      <div class="submit-bar">
+        <button class="btn-submit" style="background:var(--pink); box-shadow: 0 4px 12px rgba(219,39,119,.3);" id="btnSubmitExpectedExam">
+          <i class="fa-solid fa-flag-checkered"></i>
+          <span data-i18n="btn_finish">Finish & Submit Exam</span>
+        </button>
+        <div class="quiz-result" id="expectedExamResult" style="color:var(--pink)"></div>
+      </div>
+    </div>
+
     <!-- ══════════════ FINAL EXAM ══════════════ -->
     <div id="page-final_exam" class="page">
       <div class="hero hero-green" style="margin-bottom:28px; text-align:center;">
@@ -947,7 +974,8 @@ let timerRunning = false;
 const T = {
   en: {
     nav_section_main: 'Main', nav_section_modules: 'Modules', nav_section_exams: 'Exams',
-    nav_dashboard: 'Dashboard', nav_final: 'Final Exam',
+    nav_dashboard: 'Dashboard', nav_final: 'Final Exam', nav_expected_exam: 'Expected Qs Exam',
+    dev_credit: 'Developed by <strong>Moaz</strong>', expected_exam_h1: 'Expected Questions Exam', expected_exam_sub: 'This exam contains ONLY the questions highly expected by the professor. Focus on these!',
     user_name: 'University Student', user_course: 'Communication Skills',
     course_code: 'COMM 101',
     dash_h1: 'Master Communication Skills',
@@ -973,7 +1001,8 @@ const T = {
   },
   ar: {
     nav_section_main: 'الرئيسية', nav_section_modules: 'الوحدات', nav_section_exams: 'الامتحانات',
-    nav_dashboard: 'لوحة القيادة', nav_final: 'الامتحان النهائي',
+    nav_dashboard: 'لوحة القيادة', nav_final: 'الامتحان النهائي', nav_expected_exam: 'امتحان المتوقعة',
+    dev_credit: 'تطوير المبرمج <strong>معز</strong>', expected_exam_h1: 'امتحان الأسئلة المتوقعة الشامل', expected_exam_sub: 'هذا الامتحان يحتوي فقط على الأسئلة التي ركزت عليها الدكتورة والمتوقعة بنسبة كبيرة في الامتحان.',
     user_name: 'طالب جامعي', user_course: 'مهارات التواصل',
     course_code: 'COMM 101',
     dash_h1: 'أتقن مهارات التواصل',
@@ -1361,6 +1390,38 @@ function buildFinalExam() {
       el.textContent = t('score_msg') + result.pct + '% (' + result.score + '/' + result.total + ')';
       $('#contentScroll').scrollTop = $('#contentScroll').scrollHeight;
     }
+  };
+}
+
+// ─────────────────────────────────────────
+//  EXPECTED EXAM
+// ─────────────────────────────────────────
+let expectedBuilt = false;
+function buildExpectedExam() {
+  if (expectedBuilt) return;
+  expectedBuilt = true;
+
+  const combined = { short_answer: [] };
+  
+  DB.forEach(lec => {
+    if (lec.expected_questions) {
+      lec.expected_questions.forEach(eq => {
+        combined.short_answer.push({
+          q_en: eq.q_en,
+          q_ar: eq.q_ar,
+          a_en: eq.a_en,
+          a_ar: eq.a_ar
+        });
+      });
+    }
+  });
+
+  buildQuiz(combined, '#expectedExamBox');
+
+  $('#btnSubmitExpectedExam').onclick = () => {
+    gradeQuiz('#expectedExamBox');
+    $('#expectedExamResult').textContent = t('score_msg') + (lang === 'en' ? 'Self-Graded (Check model answers)' : 'تم التصحيح الذاتي (راجع الإجابات النموذجية)');
+    $('#contentScroll').scrollTop = $('#contentScroll').scrollHeight;
   };
 }
 
