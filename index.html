@@ -3,42 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CommHub - Premium Study Platform</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>CommHub - Premium University Study Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    /* CSS Variables for Light/Dark Theme & Glassmorphism */
+    /* CSS Variables for Light/Dark Theme & Premium EdTech Look */
     :root {
-      --primary: #4f46e5;
-      --primary-hover: #4338ca;
-      --secondary: #ec4899;
-      --bg: #f8fafc;
-      --surface: rgba(255, 255, 255, 0.7);
-      --surface-border: rgba(255, 255, 255, 0.5);
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --secondary: #db2777;
+      --accent: #10b981;
+      --bg: #f1f5f9;
+      --surface: #ffffff;
+      --surface-hover: #f8fafc;
+      --surface-border: #e2e8f0;
       --text: #0f172a;
-      --text-muted: #64748b;
+      --text-muted: #475569;
       --sidebar-w: 280px;
       --font-en: 'Inter', sans-serif;
       --font-ar: 'Cairo', sans-serif;
-      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --radius: 12px;
     }
+    
     .dark {
+      --primary: #3b82f6;
+      --primary-hover: #60a5fa;
+      --secondary: #ec4899;
       --bg: #0f172a;
-      --surface: rgba(30, 41, 59, 0.7);
-      --surface-border: rgba(255, 255, 255, 0.1);
+      --surface: #1e293b;
+      --surface-hover: #334155;
+      --surface-border: #334155;
       --text: #f8fafc;
-      --text-muted: #94a3b8;
-      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+      --text-muted: #cbd5e1;
+      --shadow-sm: 0 1px 3px 0 rgba(0,0,0,0.5);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.6);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.7);
     }
     
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    
     body {
       font-family: var(--font-en);
       background-color: var(--bg);
       color: var(--text);
-      transition: background-color 0.3s, color 0.3s;
+      transition: background-color 0.3s ease, color 0.3s ease;
       overflow-x: hidden;
       min-height: 100vh;
+      line-height: 1.6;
     }
+    
     [dir="rtl"] body { font-family: var(--font-ar); }
     
     /* Layout */
@@ -48,135 +63,240 @@
     .sidebar {
       width: var(--sidebar-w);
       background: var(--surface);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
       border-right: 1px solid var(--surface-border);
       display: flex;
       flex-direction: column;
       padding: 1.5rem;
-      transition: transform 0.3s;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 50;
+      box-shadow: var(--shadow-sm);
     }
     [dir="rtl"] .sidebar { border-right: none; border-left: 1px solid var(--surface-border); }
     
     .logo-area { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; }
-    .logo { font-size: 1.5rem; font-weight: 700; background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; color: transparent; }
+    .logo { 
+      font-size: 1.75rem; 
+      font-weight: 800; 
+      background: linear-gradient(135deg, var(--primary), var(--secondary)); 
+      -webkit-background-clip: text; 
+      color: transparent; 
+      letter-spacing: -0.5px;
+    }
     
     .nav-menu { flex: 1; overflow-y: auto; }
+    .nav-menu::-webkit-scrollbar { width: 6px; }
+    .nav-menu::-webkit-scrollbar-thumb { background: var(--surface-border); border-radius: 4px; }
+    
     .nav-item {
-      padding: 0.75rem 1rem; margin-bottom: 0.5rem; border-radius: 0.5rem;
-      cursor: pointer; font-weight: 500; color: var(--text-muted);
-      transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.875rem 1.25rem; 
+      margin-bottom: 0.5rem; 
+      border-radius: 8px;
+      cursor: pointer; 
+      font-weight: 600; 
+      color: var(--text-muted);
+      transition: all 0.2s ease; 
+      display: flex; 
+      align-items: center; 
+      gap: 0.75rem;
     }
-    .nav-item:hover, .nav-item.active { background: var(--primary); color: white; }
+    .nav-item:hover { background: var(--surface-hover); color: var(--text); }
+    .nav-item.active { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
     
     /* Main Content */
-    .main-content { flex: 1; display: flex; flex-direction: column; height: 100vh; overflow-y: auto; }
+    .main-content { flex: 1; display: flex; flex-direction: column; height: 100vh; overflow-y: auto; scroll-behavior: smooth; }
     
     /* Topbar */
     .topbar {
-      height: 70px; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between;
-      background: var(--surface); backdrop-filter: blur(12px); border-bottom: 1px solid var(--surface-border);
+      height: 72px; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between;
+      background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--surface-border);
       position: sticky; top: 0; z-index: 40;
     }
+    .dark .topbar { background: rgba(30, 41, 59, 0.8); }
+    
+    .search-container { position: relative; }
     .search-box {
-      background: var(--bg); border: 1px solid var(--surface-border); color: var(--text);
-      padding: 0.5rem 1rem; border-radius: 2rem; width: 300px; outline: none; font-family: inherit;
+      background: var(--surface); border: 1px solid var(--surface-border); color: var(--text);
+      padding: 0.6rem 1.2rem 0.6rem 2.5rem; border-radius: 2rem; width: 320px; outline: none; 
+      font-family: inherit; font-size: 0.95rem; transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .tools { display: flex; gap: 1rem; align-items: center; }
+    [dir="rtl"] .search-box { padding: 0.6rem 2.5rem 0.6rem 1.2rem; }
+    .search-box:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2); }
+    .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 1.1rem; opacity: 0.5; }
+    [dir="rtl"] .search-icon { left: auto; right: 12px; }
+    
+    .tools { display: flex; gap: 0.5rem; align-items: center; }
     .icon-btn {
-      background: none; border: none; font-size: 1.25rem; color: var(--text); cursor: pointer;
-      padding: 0.5rem; border-radius: 50%; transition: background 0.2s;
+      background: var(--surface); border: 1px solid var(--surface-border); font-size: 1.25rem; color: var(--text); 
+      cursor: pointer; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; box-shadow: var(--shadow-sm);
     }
-    .icon-btn:hover { background: rgba(128,128,128,0.2); }
+    .icon-btn:hover { background: var(--surface-hover); transform: translateY(-2px); box-shadow: var(--shadow-md); }
     
     /* Content Area */
-    .page { padding: 2rem; max-width: 1200px; margin: 0 auto; width: 100%; display: none; animation: fadeIn 0.4s; }
+    .page { padding: 2.5rem; max-width: 1100px; margin: 0 auto; width: 100%; display: none; animation: slideUp 0.4s ease-out forwards; opacity: 0; }
     .page.active { display: block; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* Dashboard Cards */
-    .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
-    .glass-card {
-      background: var(--surface); backdrop-filter: blur(12px); border: 1px solid var(--surface-border);
-      border-radius: 1rem; padding: 1.5rem; box-shadow: var(--shadow);
+    /* Dashboard UI */
+    .dash-hero {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: var(--radius); padding: 3rem; color: white; margin-bottom: 2rem;
+      box-shadow: var(--shadow-lg); position: relative; overflow: hidden;
     }
-    .stat-title { font-size: 0.875rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
-    .stat-value { font-size: 2rem; font-weight: 700; color: var(--primary); }
-
-    /* Tabs */
-    .tabs { display: flex; gap: 1rem; border-bottom: 2px solid var(--surface-border); margin-bottom: 1.5rem; overflow-x: auto; }
+    .dash-hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .dash-hero p { font-size: 1.1rem; opacity: 0.9; }
+    
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--surface-border);
+      border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow-md);
+      display: flex; align-items: center; gap: 1rem; transition: transform 0.2s;
+    }
+    .stat-card:hover { transform: translateY(-5px); }
+    .stat-icon { width: 50px; height: 50px; border-radius: 12px; background: rgba(37, 99, 235, 0.1); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+    .stat-info h3 { font-size: 0.875rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+    .stat-info p { font-size: 1.5rem; font-weight: 700; color: var(--text); }
+    
+    /* Premium Tabs */
+    .tabs-wrapper { border-bottom: 1px solid var(--surface-border); margin-bottom: 2rem; overflow-x: auto; scrollbar-width: none; }
+    .tabs-wrapper::-webkit-scrollbar { display: none; }
+    .tabs { display: flex; gap: 2rem; white-space: nowrap; width: max-content; }
     .tab {
-      padding: 0.75rem 1rem; cursor: pointer; font-weight: 600; color: var(--text-muted); border-bottom: 2px solid transparent; margin-bottom: -2px; transition: 0.2s; white-space: nowrap;
+      padding: 1rem 0; cursor: pointer; font-weight: 600; font-size: 1.05rem;
+      color: var(--text-muted); border-bottom: 3px solid transparent; transition: all 0.2s;
     }
     .tab:hover { color: var(--text); }
     .tab.active { color: var(--primary); border-bottom-color: var(--primary); }
 
-    /* Section Content */
-    .content-box { font-size: 1.1rem; line-height: 1.7; white-space: pre-wrap; margin-bottom: 2rem; }
+    /* Content Styling */
+    .card { background: var(--surface); border: 1px solid var(--surface-border); border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow-sm); margin-bottom: 2rem; }
+    .content-text { font-size: 1.15rem; line-height: 1.8; white-space: pre-wrap; color: var(--text); }
     
+    /* Key Concepts */
+    .concept-card { border-left: 4px solid var(--primary); padding: 1.5rem; background: var(--surface-hover); border-radius: 0 var(--radius) var(--radius) 0; margin-bottom: 1rem; }
+    [dir="rtl"] .concept-card { border-left: none; border-right: 4px solid var(--primary); border-radius: var(--radius) 0 0 var(--radius); }
+    
+    /* Exam Notes */
+    .exam-note-card { background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: var(--radius); padding: 1.5rem; }
+    .exam-note-card li { margin-bottom: 0.75rem; color: var(--text); font-weight: 500; }
+
     /* Flashcards */
-    .flashcard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-    .flashcard { perspective: 1000px; height: 200px; cursor: pointer; }
-    .flashcard-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; }
+    .flashcard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .flashcard { perspective: 1000px; height: 220px; cursor: pointer; }
+    .flashcard-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
     .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
     .flashcard-face {
       position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; align-items: center; justify-content: center;
-      padding: 1.5rem; border-radius: 1rem; box-shadow: var(--shadow); background: var(--surface); border: 1px solid var(--surface-border);
+      padding: 1.5rem; border-radius: var(--radius); box-shadow: var(--shadow-md); border: 1px solid var(--surface-border);
     }
-    .flashcard-front { color: var(--primary); font-weight: 700; font-size: 1.2rem; }
-    .flashcard-back { background: var(--primary); color: white; transform: rotateY(180deg); font-size: 1.1rem; }
+    .flashcard-front { background: var(--surface); color: var(--text); font-weight: 700; font-size: 1.25rem; }
+    .flashcard-back { background: var(--primary); color: white; transform: rotateY(180deg); font-size: 1.15rem; font-weight: 500; }
 
-    /* Quiz */
-    .quiz-q { margin-bottom: 2rem; padding: 1.5rem; border-radius: 1rem; background: var(--surface); border: 1px solid var(--surface-border); }
-    .quiz-options { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1rem; }
-    .quiz-opt { padding: 1rem; border-radius: 0.5rem; border: 1px solid var(--surface-border); cursor: pointer; transition: 0.2s; }
-    .quiz-opt:hover { background: rgba(79, 70, 229, 0.1); border-color: var(--primary); }
-    .quiz-opt.selected { background: var(--primary); color: white; }
-    .quiz-opt.correct { background: #10b981; color: white; }
-    .quiz-opt.wrong { background: #ef4444; color: white; }
-    .btn { padding: 0.75rem 1.5rem; background: var(--primary); color: white; border: none; border-radius: 0.5rem; font-weight: 600; cursor: pointer; font-family: inherit; }
-    .btn:hover { background: var(--primary-hover); }
-    .feedback { margin-top: 1rem; padding: 1rem; border-radius: 0.5rem; display: none; background: rgba(0,0,0,0.05); }
+    /* Premium Quiz Engine UI */
+    .quiz-section-title { font-size: 1.5rem; font-weight: 700; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--surface-border); color: var(--primary); }
+    
+    .quiz-q { margin-bottom: 2rem; padding: 2rem; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--surface-border); box-shadow: var(--shadow-sm); }
+    .quiz-q h4 { font-size: 1.2rem; margin-bottom: 1.5rem; color: var(--text); line-height: 1.5; }
+    
+    .quiz-options { display: flex; flex-direction: column; gap: 0.75rem; }
+    .quiz-opt { 
+      padding: 1.2rem 1.5rem; border-radius: 8px; border: 2px solid var(--surface-border); 
+      cursor: pointer; transition: all 0.2s ease; font-weight: 500; font-size: 1.05rem;
+      background: var(--bg);
+    }
+    .quiz-opt:hover { border-color: var(--primary); background: rgba(37, 99, 235, 0.05); }
+    .quiz-opt.selected { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); }
+    .quiz-opt.correct { background: var(--accent); color: white; border-color: var(--accent); }
+    .quiz-opt.wrong { background: #ef4444; color: white; border-color: #ef4444; }
+    
+    /* Text Inputs for Definitions / Short Answer */
+    .quiz-textarea {
+      width: 100%; padding: 1.2rem; border-radius: 8px; border: 2px solid var(--surface-border);
+      background: var(--bg); color: var(--text); font-family: inherit; font-size: 1.05rem;
+      resize: vertical; min-height: 120px; transition: border-color 0.2s;
+    }
+    .quiz-textarea:focus { outline: none; border-color: var(--primary); }
+    
+    .btn { 
+      padding: 1rem 2rem; background: var(--primary); color: white; border: none; 
+      border-radius: 8px; font-weight: 700; font-size: 1.1rem; cursor: pointer; 
+      font-family: inherit; transition: all 0.2s; box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+    }
+    .btn:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3); }
+    
+    .feedback { margin-top: 1.5rem; padding: 1.2rem; border-radius: 8px; display: none; background: var(--surface-hover); border-left: 4px solid var(--primary); font-size: 1.05rem; }
+    [dir="rtl"] .feedback { border-left: none; border-right: 4px solid var(--primary); }
+    
+    .model-answer-box {
+      margin-top: 1rem; padding: 1.2rem; border-radius: 8px; background: rgba(16, 185, 129, 0.1); 
+      border: 1px solid rgba(16, 185, 129, 0.3); display: none;
+    }
+    .model-answer-box strong { color: var(--accent); display: block; margin-bottom: 0.5rem; }
 
-    /* Mobile */
+    /* Mobile Responsiveness */
+    @media (max-width: 1024px) {
+      .page { padding: 1.5rem; }
+      .dash-hero { padding: 2rem; }
+    }
     @media (max-width: 768px) {
-      .sidebar { position: fixed; left: -100%; }
+      .sidebar { position: fixed; left: -100%; top: 0; bottom: 0; }
       [dir="rtl"] .sidebar { left: auto; right: -100%; }
-      .sidebar.open { left: 0; }
-      [dir="rtl"] .sidebar.open { right: 0; }
+      .sidebar.open { left: 0; box-shadow: 10px 0 20px rgba(0,0,0,0.2); }
+      [dir="rtl"] .sidebar.open { right: 0; box-shadow: -10px 0 20px rgba(0,0,0,0.2); }
+      
       .topbar { padding: 0 1rem; }
+      .search-box { width: 180px; }
+      .dash-hero h1 { font-size: 2rem; }
+      .grid-3 { grid-template-columns: 1fr; }
     }
+    @media (max-width: 480px) {
+      .search-box { display: none; } /* Hide search on very small screens to save space */
+      .page { padding: 1rem; }
+      .quiz-q { padding: 1.2rem; }
+      .btn { width: 100%; }
+    }
+    
+    /* Hamburger Menu Button */
+    .menu-btn { display: none; background: none; border: none; color: var(--text); font-size: 1.5rem; cursor: pointer; margin-right: 1rem; }
+    [dir="rtl"] .menu-btn { margin-right: 0; margin-left: 1rem; }
+    @media (max-width: 768px) { .menu-btn { display: block; } }
   </style>
 </head>
-<body class="dark">
+<body class="light">
   <div class="app-container">
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
       <div class="logo-area">
         <div class="logo">CommHub</div>
-        <button class="icon-btn" id="closeMenu" style="display:none;">✕</button>
+        <button class="icon-btn" id="closeMenu" style="display:none; width:30px; height:30px; font-size:1rem;">✕</button>
       </div>
       <nav class="nav-menu" id="navMenu">
-        <div class="nav-item active" data-target="dashboard">📊 <span data-i18n="nav_dashboard">Dashboard</span></div>
-        <div style="margin: 1rem 0; font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;" data-i18n="nav_lectures">Lectures</div>
+        <div class="nav-item active" data-target="dashboard">
+          <span style="font-size:1.2rem;">📊</span> <span data-i18n="nav_dashboard">Dashboard</span>
+        </div>
+        <div style="margin: 1.5rem 0 0.5rem; font-size: 0.8rem; font-weight:700; color: var(--text-muted); text-transform: uppercase; letter-spacing:1px;" data-i18n="nav_lectures">Study Modules</div>
         <!-- Lecture links generated dynamically -->
       </nav>
-      <div style="margin-top:auto;">
-        <div class="nav-item" data-target="final_exam">🏆 <span data-i18n="nav_final_exam">Final Exam</span></div>
+      <div style="margin-top:auto; padding-top:1rem; border-top: 1px solid var(--surface-border);">
+        <div class="nav-item" data-target="final_exam" style="background: rgba(37, 99, 235, 0.1); color: var(--primary);">
+          <span style="font-size:1.2rem;">🏆</span> <strong data-i18n="nav_final_exam">Final Exam</strong>
+        </div>
       </div>
     </aside>
 
     <!-- Main Content -->
-    <main class="main-content">
+    <main class="main-content" id="mainScroll">
       <header class="topbar">
-        <div style="display:flex; align-items:center; gap:1rem;">
-          <button class="icon-btn" id="openMenu" style="display:none;">☰</button>
-          <input type="text" class="search-box" placeholder="Search..." id="searchInput">
+        <div style="display:flex; align-items:center;">
+          <button class="menu-btn" id="openMenu">☰</button>
+          <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-box" placeholder="Search topics, definitions..." id="searchInput">
+          </div>
         </div>
         <div class="tools">
           <button class="icon-btn" id="btnTimer" title="Pomodoro Timer">⏱️</button>
-          <button class="icon-btn" id="btnNotes" title="Personal Notes">📝</button>
           <button class="icon-btn" id="btnLang" title="Toggle Language">🇬🇧/🇸🇦</button>
           <button class="icon-btn" id="btnTheme" title="Toggle Theme">🌓</button>
         </div>
@@ -186,107 +306,162 @@
       <div id="pagesContainer">
         <!-- Dashboard -->
         <div class="page active" id="page-dashboard">
-          <h1 style="margin-bottom:2rem;" data-i18n="dash_welcome">Welcome to CommHub</h1>
-          <div class="grid-4">
-            <div class="glass-card">
-              <div class="stat-title" data-i18n="dash_total_lec">Total Lectures</div>
-              <div class="stat-value" id="stat-lec">4</div>
+          <div class="dash-hero">
+            <h1 data-i18n="dash_welcome">Welcome to CommHub</h1>
+            <p data-i18n="dash_desc">Your premium platform to master Communication Skills and ace your exams.</p>
+          </div>
+          
+          <div class="grid-3">
+            <div class="stat-card">
+              <div class="stat-icon">📚</div>
+              <div class="stat-info">
+                <h3 data-i18n="dash_total_lec">Total Lectures</h3>
+                <p id="stat-lec">4</p>
+              </div>
             </div>
-            <div class="stat-title glass-card">
-              <div class="stat-title" data-i18n="dash_avg_score">Avg Quiz Score</div>
-              <div class="stat-value" id="stat-score">--%</div>
+            <div class="stat-card">
+              <div class="stat-icon" style="background:rgba(16, 185, 129, 0.1); color:var(--accent);">🎯</div>
+              <div class="stat-info">
+                <h3 data-i18n="dash_avg_score">Avg Quiz Score</h3>
+                <p id="stat-score">--%</p>
+              </div>
             </div>
-            <div class="stat-title glass-card">
-              <div class="stat-title" data-i18n="dash_streak">Study Streak</div>
-              <div class="stat-value">🔥 1</div>
+            <div class="stat-card">
+              <div class="stat-icon" style="background:rgba(236, 72, 153, 0.1); color:var(--secondary);">🔥</div>
+              <div class="stat-info">
+                <h3 data-i18n="dash_streak">Study Streak</h3>
+                <p>Day 1</p>
+              </div>
             </div>
           </div>
           
-          <h2 style="margin-bottom:1rem;" data-i18n="dash_select">Select a lecture to start</h2>
-          <div class="grid-4" id="dashLecturesGrid"></div>
+          <h2 style="margin-bottom:1.5rem; font-weight:800; color:var(--text);" data-i18n="dash_select">Select a Module to Start</h2>
+          <div class="grid-3" id="dashLecturesGrid"></div>
         </div>
 
         <!-- Lecture Template Page -->
         <div class="page" id="page-lecture">
-          <h1 id="lecTitle" style="margin-bottom:1rem;"></h1>
+          <h1 id="lecTitle" style="font-size:2.2rem; font-weight:800; margin-bottom:0.5rem;"></h1>
+          <p style="color:var(--text-muted); margin-bottom:2rem;" id="lecMeta">Master this module through reading, flashcards, and quizzes.</p>
           
-          <div class="tabs" id="lecTabs">
-            <div class="tab active" data-tab="content" data-i18n="tab_content">Content</div>
-            <div class="tab" data-tab="notes" data-i18n="tab_notes">Simplified Notes</div>
-            <div class="tab" data-tab="flashcards" data-i18n="tab_flashcards">Flashcards</div>
-            <div class="tab" data-tab="quiz" data-i18n="tab_quiz">Lecture Quiz</div>
-            <div class="tab" data-tab="expected" data-i18n="tab_expected">Expected Questions</div>
+          <div class="tabs-wrapper">
+            <div class="tabs" id="lecTabs">
+              <div class="tab active" data-tab="content" data-i18n="tab_content">📖 Original Content</div>
+              <div class="tab" data-tab="notes" data-i18n="tab_notes">📝 Simplified Notes</div>
+              <div class="tab" data-tab="flashcards" data-i18n="tab_flashcards">🗂️ Flashcards</div>
+              <div class="tab" data-tab="quiz" data-i18n="tab_quiz">✍️ Practice Quiz</div>
+              <div class="tab" data-tab="expected" data-i18n="tab_expected">⭐ Expected Questions</div>
+            </div>
           </div>
 
+          <!-- Original Content -->
           <div class="tab-content" id="tab-content">
-            <div class="content-box glass-card" id="lecContentBox"></div>
+            <div class="card content-text" id="lecContentBox"></div>
           </div>
+          
+          <!-- Simplified Notes & Concepts -->
           <div class="tab-content" id="tab-notes" style="display:none;">
-            <div class="content-box glass-card" id="lecNotesBox"></div>
-            <h3 style="margin:2rem 0 1rem;" data-i18n="title_key_concepts">Key Concepts</h3>
+            <div class="card content-text" id="lecNotesBox"></div>
+            
+            <h2 style="margin:2.5rem 0 1.5rem; font-weight:800;" data-i18n="title_key_concepts">Key Concepts</h2>
             <div id="lecConceptsBox"></div>
-            <h3 style="margin:2rem 0 1rem;" data-i18n="title_exam_notes">Exam Notes</h3>
-            <div class="glass-card" id="lecExamNotesBox" style="background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3);"></div>
+            
+            <h2 style="margin:2.5rem 0 1.5rem; font-weight:800;" data-i18n="title_exam_notes">⚠️ Important Exam Notes</h2>
+            <div class="exam-note-card">
+              <ul id="lecExamNotesBox" style="margin-left:1.5rem; padding-left:0.5rem;"></ul>
+            </div>
           </div>
+          
+          <!-- Flashcards -->
           <div class="tab-content" id="tab-flashcards" style="display:none;">
+            <p style="margin-bottom:2rem; color:var(--text-muted);" data-i18n="desc_flashcards">Click on any card to flip it and reveal the answer.</p>
             <div class="flashcard-grid" id="lecFlashcardsBox"></div>
           </div>
+          
+          <!-- Quiz Engine -->
           <div class="tab-content" id="tab-quiz" style="display:none;">
+            <p style="margin-bottom:2rem; color:var(--text-muted); font-size:1.1rem;" data-i18n="desc_quiz">Test your knowledge. Includes Multiple Choice, True/False, and Written Answers (Definitions & Short Answers).</p>
+            
             <div id="lecQuizBox"></div>
-            <button class="btn" id="btnSubmitQuiz" style="margin-top:1rem;" data-i18n="btn_submit">Submit Quiz</button>
-            <div id="quizResult" style="margin-top:1.5rem; font-weight:bold; font-size:1.2rem;"></div>
+            
+            <div style="background:var(--surface); padding:2rem; border-radius:var(--radius); border:1px solid var(--surface-border); box-shadow:var(--shadow-sm); text-align:center; margin-top:2rem;">
+              <button class="btn" id="btnSubmitQuiz" data-i18n="btn_submit">Submit & Grade Quiz</button>
+              <div id="quizResult" style="margin-top:1.5rem; font-weight:800; font-size:1.5rem; color:var(--primary);"></div>
+            </div>
           </div>
+          
+          <!-- Expected Questions -->
           <div class="tab-content" id="tab-expected" style="display:none;">
+            <p style="margin-bottom:2rem; color:var(--text-muted);" data-i18n="desc_expected">These questions are highly probable to appear in your exams based on the professor's focus areas.</p>
             <div id="lecExpectedBox"></div>
           </div>
         </div>
         
         <!-- Final Exam -->
         <div class="page" id="page-final_exam">
-          <h1 style="margin-bottom:2rem;" data-i18n="title_final_exam">Comprehensive Final Exam</h1>
-          <p style="margin-bottom:2rem;" data-i18n="desc_final_exam">This exam covers all topics from all lectures. Good luck!</p>
+          <div class="dash-hero" style="background: linear-gradient(135deg, #10b981, #059669);">
+            <h1 data-i18n="title_final_exam">Comprehensive Final Exam</h1>
+            <p data-i18n="desc_final_exam">This exam covers all topics from all lectures. It simulates the real final exam environment.</p>
+          </div>
           <div id="finalQuizBox"></div>
-          <button class="btn" id="btnSubmitFinal" style="margin-top:1rem;" data-i18n="btn_submit">Submit Exam</button>
-          <div id="finalQuizResult" style="margin-top:1.5rem; font-weight:bold; font-size:1.2rem;"></div>
+          <div style="text-align:center; margin-top:3rem;">
+            <button class="btn" id="btnSubmitFinal" style="font-size:1.2rem; padding:1.2rem 3rem;" data-i18n="btn_submit">Submit Final Exam</button>
+            <div id="finalQuizResult" style="margin-top:1.5rem; font-weight:800; font-size:2rem; color:var(--accent);"></div>
+          </div>
         </div>
         
       </div>
     </main>
   </div>
   
-  <!-- Mini Modals / Overlays (Timer, Notes) -->
-  <div id="timerModal" style="display:none; position:fixed; top:80px; right:20px; background:var(--surface); padding:1rem; border-radius:1rem; box-shadow:var(--shadow); z-index:100; backdrop-filter:blur(12px); border:1px solid var(--surface-border);">
-    <h3 style="margin-bottom:0.5rem; text-align:center;">Pomodoro</h3>
-    <div id="timeDisplay" style="font-size:2rem; font-weight:bold; text-align:center; margin-bottom:0.5rem;">25:00</div>
+  <!-- Mini Timer Modal -->
+  <div id="timerModal" style="display:none; position:fixed; top:85px; right:20px; background:var(--surface); padding:1.5rem; border-radius:var(--radius); box-shadow:var(--shadow-lg); z-index:100; border:1px solid var(--surface-border); width:250px;">
+    <h3 style="margin-bottom:1rem; text-align:center; font-weight:700;">Pomodoro Timer</h3>
+    <div id="timeDisplay" style="font-size:3rem; font-weight:800; text-align:center; margin-bottom:1.5rem; color:var(--primary); font-variant-numeric: tabular-nums;">25:00</div>
     <div style="display:flex; gap:0.5rem;">
-      <button class="btn" id="btnTimerStart" style="padding:0.5rem;">Start</button>
-      <button class="btn" id="btnTimerReset" style="padding:0.5rem; background:var(--text-muted);">Reset</button>
+      <button class="btn" id="btnTimerStart" style="flex:1; padding:0.75rem;">Start</button>
+      <button class="btn" id="btnTimerReset" style="flex:1; padding:0.75rem; background:var(--surface-border); color:var(--text);">Reset</button>
     </div>
   </div>
 
   <script>
+    // FULL JSON DATABASE IS EMBEDDED HERE
     const db = [{"id": "L3", "title_en": "Perspectives in Communication", "title_ar": "وجهات النظر في التواصل", "outcomes_en": ["Introduction", "Perspectives in Communication", "Factors Affecting Perspectives in Communication"], "outcomes_ar": ["مقدمة", "وجهات النظر في التواصل", "العوامل المؤثرة على وجهات النظر في التواصل"], "content_en": "Perspectives in Communication:\nWe all see the world with our own thinking, known as our individual perceptions. These individual perceptions are actually the filters through which we see and understand the world. It is our view through which we handle a situation or a topic. Every person has different thinking or opinions.\n\nPerspectives are ideas, views, or fixed ways of thinking. These sometimes affect our communication. For example, if you have a fixed idea that your teacher or father is strict, even when they are being friendly, you may think they are scolding you even though they are polite. In the same way, others may also have fixed ideas about you, which affects whatever you say to them.\n\nFactors Affecting Perspectives in Communication:\n\n1. Visual Perception:\nIt is the ability to see and to interpret visual information. Without accurate visual perception, a person would have difficulty in learning to read, following directions, or copying from a whiteboard. For example, the famous picture that some see as a young girl, and others see as an old woman, reveals two perspectives. Both of the perspectives represented in the young and old woman are true - they are simply two different ways of seeing the same thing.\n\n2. Language:\nLanguage not only helps in communication but it shapes our perception. Various emotions, feelings, and experiences can be influenced by the pattern of the language a person speaks. The same words can have different meanings depending on how you interpret them. For example: 'A woman without her man is nothing' vs 'A woman: without her, man is nothing'. The words are the same in both cases, but the meaning has changed completely. So although we think our meaning may be clear, we cannot always be sure the other person will read or hear them in that way.\n\n3. Past Experience:\nOur past experience greatly affects our way of thinking. It acts as a filter through which we see a particular situation. Our past experience can be positive or negative. For example, imagine you are in a meeting discussing changes in personnel policies at work. You might bring examples of other companies' policies, examples from your own time in the company, or you might come to the table empty-handed. What influences you? Your past experience. You bring outside info because you learned it helps decision-making; or you bring own examples because you learned they are powerful; or you come empty-handed because in the past your input wasn't valued or you have no past experience.\n\n4. Prejudices (Favouritism):\nIt is an unfavorable feeling toward a person or people because of their gender, age, religion, language, or any personal characteristics. It greatly limits the chances of communication being successful or producing the desired result. We should treat each person as a separate individual and respect their ideas.\n\n5. Feeling:\nFeeling is known as a state of consciousness that results from emotions, sentiments, or desires. A person's current mood affects the way they judge others. When we feel happy, we communicate better, but if we feel ill, we will not communicate effectively.\n\n6. Environment:\nAll of us communicate differently in different environments. We speak to our colleagues and friends in different ways. The environment can make a person more comfortable and help attain the level of formality which is important in a particular situation.", "content_ar": "وجهات النظر في التواصل:\nنحن جميعًا نرى العالم بتفكيرنا الخاص، وهو ما يُعرف بإدراكاتنا الفردية. هذه الإدراكات الفردية هي في الواقع الفلاتر التي نرى ونفهم العالم من خلالها. إنها وجهة نظرنا التي نتعامل من خلالها مع موقف أو موضوع ما. لكل شخص تفكير أو آراء مختلفة.\n\nوجهات النظر هي أفكار، آراء، أو طرق تفكير ثابتة. هذه في بعض الأحيان تؤثر على تواصلنا. على سبيل المثال، إذا كانت لديك فكرة ثابتة بأن معلمك أو والدك صارم، حتى عندما يكونون ودودين، قد تعتقد أنهم يوبخونك على الرغم من أنهم مهذبون. وبنفس الطريقة، قد يكون لدى الآخرين أيضًا أفكار ثابتة عنك، مما يؤثر على أي شيء تقوله لهم.\n\nالعوامل المؤثرة على وجهات النظر في التواصل:\n\n1. الإدراك البصري (Visual Perception):\nهو القدرة على رؤية وتفسير المعلومات البصرية. بدون إدراك بصري دقيق، سيواجه الشخص صعوبة في تعلم القراءة، اتباع التوجيهات، أو النسخ من السبورة. على سبيل المثال، الصورة الشهيرة التي يراها البعض كفتاة شابة، ويراها آخرون كامرأة عجوز، تكشف عن وجهتي نظر. كلتا وجهتي النظر الممثلتين في المرأة الشابة والعجوز صحيحتان - هما ببساطة طريقتان مختلفتان لرؤية نفس الشيء.\n\n2. اللغة (Language):\nاللغة لا تساعد فقط في التواصل بل تشكل إدراكنا. يمكن أن تتأثر المشاعر والأحاسيس والتجارب المختلفة بنمط اللغة التي يتحدث بها الشخص. يمكن أن يكون لنفس الكلمات معاني مختلفة اعتمادًا على كيفية تفسيرها. المثال الكلاسيكي الذي يتغير معناه بتغيير علامات الترقيم يوضح ذلك. لذا، على الرغم من أننا قد نعتقد أن المعنى الذي نقصده واضح، لا يمكننا التأكد دائمًا من أن الشخص الآخر سيقرأه أو يسمعه بنفس الطريقة.\n\n3. التجربة السابقة (Past Experience):\nتؤثر تجربتنا السابقة بشكل كبير على طريقة تفكيرنا. فهي تعمل كفلتر نرى من خلاله موقفًا معينًا. يمكن أن تكون تجربتنا السابقة إيجابية أو سلبية. على سبيل المثال، في اجتماع لمناقشة التغييرات، قد تجلب معلومات خارجية لأنك تعلمت في الماضي أنها مفيدة، أو قد تأتي خالي الوفاض لأنك شعرت في الماضي أن رأيك لم يكن مقدراً. في كل موقف، يتأثر تواصلك بتجربتك السابقة.\n\n4. التحيز (Prejudices):\nهو عادة شعور غير مرغوب فيه تجاه شخص أو أشخاص بسبب جنسهم، عمرهم، دينهم، لغتهم، أو أي خصائص شخصية أخرى. إنه يحد بشكل كبير من فرص نجاح التواصل أو إنتاج النتيجة المرجوة. يجب أن نعامل كل شخص كفرد مستقل ونحترم أفكاره.\n\n5. الشعور (Feeling):\nيُعرف الشعور بأنه حالة من الوعي ناتجة عن العواطف، الأحاسيس، أو الرغبات. مزاج الشخص الحالي يؤثر على الطريقة التي يحكم بها على الآخرين. عندما نشعر بالسعادة نتواصل بشكل أفضل، ولكن إذا شعرنا بالمرض، فلن نتواصل بفعالية.\n\n6. البيئة (Environment):\nنتواصل جميعًا بشكل مختلف في بيئات مختلفة. نحن نتحدث مع زملائنا وأصدقائنا بطرق مختلفة. البيئة يمكن أن تجعل الشخص يشعر براحة أكبر وتساعد في الوصول إلى مستوى الرسمية المهم في موقف معين.", "simplified_notes_en": "Communication is shaped by how we see the world (our perspective). Six main factors act as filters and influence our understanding:\n1. Visual Perception: How our eyes and brain interpret what we see.\n2. Language: The words and phrasing we use can completely change a message.\n3. Past Experience: What happened to us before affects how we react now.\n4. Prejudices: Judging someone based on age, gender, or religion ruins communication.\n5. Feeling: Your current mood (happy, sick, angry) affects how well you communicate.\n6. Environment: Where you are (work vs. home) changes how formal or relaxed you are.", "simplified_notes_ar": "يتشكل التواصل من خلال كيفية رؤيتنا للعالم (منظورنا). تعمل ستة عوامل رئيسية كفلاتر وتؤثر على فهمنا:\n1. الإدراك البصري: كيف تفسر أعيننا وعقولنا ما نراه.\n2. اللغة: الكلمات والعبارات التي نستخدمها يمكن أن تغير الرسالة تمامًا.\n3. التجربة السابقة: ما حدث لنا في الماضي يؤثر على رد فعلنا الآن.\n4. التحيزات: الحكم على شخص بناءً على العمر، الجنس، أو الدين يدمر التواصل.\n5. الشعور: مزاجك الحالي (سعيد، مريض، غاضب) يؤثر على مدى جودة تواصلك.\n6. البيئة: مكان تواجدك (العمل مقابل المنزل) يغير من مستوى الرسمية أو الاسترخاء.", "key_concepts": [{"term_en": "Perspectives", "term_ar": "وجهات النظر", "def_en": "Ideas, views, or fixed ways of thinking that act as filters through which we understand the world.", "def_ar": "أفكار، آراء، أو طرق تفكير ثابتة تعمل كفلاتر نفهم العالم من خلالها."}, {"term_en": "Visual Perception", "term_ar": "الإدراك البصري", "def_en": "The ability to see and interpret visual information accurately.", "def_ar": "القدرة على رؤية وتفسير المعلومات البصرية بدقة."}, {"term_en": "Prejudices", "term_ar": "التحيزات", "def_en": "An unfavorable feeling toward people because of their personal characteristics (gender, age, religion).", "def_ar": "شعور غير مرغوب فيه تجاه الأشخاص بسبب خصائصهم الشخصية (الجنس، العمر، الدين)."}], "exam_notes_en": ["Memorize the 6 factors affecting perspective.", "Remember the difference between Feeling (mood/emotions) and Prejudices (judging characteristics).", "Understand that past experiences act as a filter for current situations."], "exam_notes_ar": ["احفظ العوامل الستة المؤثرة على وجهة النظر.", "تذكر الفرق بين الشعور (المزاج/العواطف) والتحيزات (الحكم على الخصائص).", "افهم أن التجارب السابقة تعمل كفلتر للمواقف الحالية."], "flashcards": [{"q_en": "What is the definition of Perspectives?", "q_ar": "ما هو تعريف وجهات النظر؟", "a_en": "Ideas, views, or fixed ways of thinking that act as filters.", "a_ar": "أفكار، آراء، أو طرق تفكير ثابتة تعمل كفلاتر."}, {"q_en": "Name the 6 factors affecting perspectives.", "q_ar": "اذكر العوامل الستة المؤثرة على وجهات النظر.", "a_en": "1. Visual Perception 2. Language 3. Past Experience 4. Prejudices 5. Feeling 6. Environment", "a_ar": "1. الإدراك البصري 2. اللغة 3. التجربة السابقة 4. التحيزات 5. الشعور 6. البيئة"}, {"q_en": "What is Visual Perception?", "q_ar": "ما هو الإدراك البصري؟", "a_en": "The ability to see and interpret visual information.", "a_ar": "القدرة على رؤية وتفسير المعلومات البصرية."}, {"q_en": "How does Language affect communication?", "q_ar": "كيف تؤثر اللغة على التواصل؟", "a_en": "It shapes perception; the same words can have different meanings based on interpretation.", "a_ar": "تشكل الإدراك؛ نفس الكلمات يمكن أن يكون لها معاني مختلفة بناءً على التفسير."}, {"q_en": "Define Prejudices in communication.", "q_ar": "عرف التحيزات في التواصل.", "a_en": "Unfavorable feelings toward people due to gender, age, religion, or language.", "a_ar": "مشاعر غير مرغوب فيها تجاه الأشخاص بسبب الجنس، العمر، الدين، أو اللغة."}], "quizzes": {"mcq": [{"q_en": "Which of the following is defined as 'ideas, views, or fixed ways of thinking'?", "q_ar": "أي مما يلي يُعرّف بأنه 'أفكار، آراء، أو طرق تفكير ثابتة'؟", "options_en": ["A) Visual Perception", "B) Perspectives", "C) Environment", "D) Formal Communication"], "options_ar": ["أ) الإدراك البصري", "ب) وجهات النظر", "ج) البيئة", "د) التواصل الرسمي"], "answer_index": 1, "explanation_en": "Perspectives act as filters through which we understand the world.", "explanation_ar": "تعمل وجهات النظر كفلاتر نفهم العالم من خلالها."}, {"q_en": "An unfavorable feeling toward a person because of their age or religion is called:", "q_ar": "الشعور غير المرغوب فيه تجاه شخص بسبب عمره أو دينه يسمى:", "options_en": ["A) Feeling", "B) Past Experience", "C) Prejudices", "D) Environment"], "options_ar": ["أ) الشعور", "ب) التجربة السابقة", "ج) التحيزات", "د) البيئة"], "answer_index": 2, "explanation_en": "Prejudices are judgments based on personal characteristics.", "explanation_ar": "التحيزات هي أحكام مبنية على الخصائص الشخصية."}, {"q_en": "Which factor refers to how a person's current mood affects their communication?", "q_ar": "أي عامل يشير إلى كيفية تأثير مزاج الشخص الحالي على تواصله؟", "options_en": ["A) Feeling", "B) Prejudices", "C) Visual Perception", "D) Past Experience"], "options_ar": ["أ) الشعور", "ب) التحيزات", "ج) الإدراك البصري", "د) التجربة السابقة"], "answer_index": 0, "explanation_en": "Feeling is the state of consciousness from emotions that affects communication effectiveness.", "explanation_ar": "الشعور هو حالة الوعي الناتجة عن العواطف والتي تؤثر على فعالية التواصل."}, {"q_en": "The famous picture that can be seen as a young girl or an old woman is an example of:", "q_ar": "الصورة الشهيرة التي يمكن رؤيتها كفتاة شابة أو امرأة عجوز هي مثال على:", "options_en": ["A) Language", "B) Past Experience", "C) Prejudices", "D) Visual Perception"], "options_ar": ["أ) اللغة", "ب) التجربة السابقة", "ج) التحيزات", "د) الإدراك البصري"], "answer_index": 3, "explanation_en": "Visual perception is the ability to see and interpret visual info differently.", "explanation_ar": "الإدراك البصري هو القدرة على رؤية وتفسير المعلومات البصرية بشكل مختلف."}, {"q_en": "According to the lecture, our individual perceptions act as ________ through which we see the world.", "q_ar": "وفقًا للمحاضرة، تعمل إدراكاتنا الفردية كـ ________ نرى العالم من خلالها.", "options_en": ["A) Walls", "B) Mirrors", "C) Filters", "D) Shields"], "options_ar": ["أ) جدران", "ب) مرايا", "ج) فلاتر", "د) دروع"], "answer_index": 2, "explanation_en": "Individual perceptions are filters that affect understanding.", "explanation_ar": "الإدراكات الفردية هي فلاتر تؤثر على الفهم."}], "tf": [{"q_en": "Prejudices increase the chances of successful communication.", "q_ar": "تزيد التحيزات من فرص نجاح التواصل.", "answer": false, "explanation_en": "Prejudices greatly limit the chances of communication being successful.", "explanation_ar": "التحيزات تحد بشكل كبير من فرص نجاح التواصل."}, {"q_en": "Language only helps in communication but does not shape our perception.", "q_ar": "اللغة تساعد فقط في التواصل لكنها لا تشكل إدراكنا.", "answer": false, "explanation_en": "Language not only helps in communication but it shapes our perception.", "explanation_ar": "اللغة لا تساعد فقط في التواصل بل تشكل إدراكنا."}, {"q_en": "The environment can dictate the level of formality in communication.", "q_ar": "البيئة يمكن أن تملي مستوى الرسمية في التواصل.", "answer": true, "explanation_en": "We communicate differently based on the environment to attain appropriate formality.", "explanation_ar": "نتواصل بشكل مختلف بناءً على البيئة للوصول إلى مستوى الرسمية المناسب."}, {"q_en": "Visual perception is the ability to interpret written text without seeing it.", "q_ar": "الإدراك البصري هو القدرة على تفسير النص المكتوب دون رؤيته.", "answer": false, "explanation_en": "Visual perception is the ability to see and interpret visual information.", "explanation_ar": "الإدراك البصري هو القدرة على رؤية وتفسير المعلومات البصرية."}, {"q_en": "When we feel ill, our communication effectiveness is negatively affected.", "q_ar": "عندما نشعر بالمرض، تتأثر فعالية تواصلنا سلبًا.", "answer": true, "explanation_en": "Feeling happy improves communication, while feeling ill hinders it.", "explanation_ar": "الشعور بالسعادة يحسن التواصل، بينما الشعور بالمرض يعيقه."}], "definitions": [{"q_en": "Define: Prejudices", "q_ar": "عرف: التحيزات", "a_en": "An unfavorable feeling toward people because of their gender, age, religion, language, or personal characteristics.", "a_ar": "شعور غير مرغوب فيه تجاه الأشخاص بسبب الجنس، العمر، الدين، اللغة، أو الخصائص الشخصية."}, {"q_en": "Define: Visual Perception", "q_ar": "عرف: الإدراك البصري", "a_en": "The ability to see and to interpret visual information.", "a_ar": "القدرة على رؤية وتفسير المعلومات البصرية."}, {"q_en": "Define: Feeling", "q_ar": "عرف: الشعور", "a_en": "A state of consciousness resulting from emotions, sentiments, or desires.", "a_ar": "حالة من الوعي ناتجة عن العواطف، الأحاسيس، أو الرغبات."}], "short_answer": [{"q_en": "What are the 6 factors that affect perspectives in communication?", "q_ar": "ما هي العوامل الستة التي تؤثر على وجهات النظر في التواصل؟", "a_en": "1. Visual Perception, 2. Language, 3. Past Experience, 4. Prejudices, 5. Feeling, 6. Environment.", "a_ar": "1. الإدراك البصري، 2. اللغة، 3. التجربة السابقة، 4. التحيزات، 5. الشعور، 6. البيئة."}, {"q_en": "How does past experience act as a filter in communication?", "q_ar": "كيف تعمل التجربة السابقة كفلتر في التواصل؟", "a_en": "It influences our decisions and reactions in present situations based on what we have learned or felt in the past.", "a_ar": "إنها تؤثر على قراراتنا وردود أفعالنا في المواقف الحالية بناءً على ما تعلمناه أو شعرنا به في الماضي."}]}, "expected_questions": [{"q_en": "Discuss the impact of Language on communication perspectives and provide an example.", "q_ar": "ناقش تأثير اللغة على وجهات نظر التواصل وقدم مثالاً.", "a_en": "Language shapes perception and influences emotions. The same words can have different meanings based on interpretation. Example: The sentence 'A woman without her man is nothing' completely changes meaning when punctuated differently.", "a_ar": "اللغة تشكل الإدراك وتؤثر على العواطف. نفس الكلمات يمكن أن يكون لها معاني مختلفة بناءً على التفسير. مثال: تتغير دلالة الجملة باختلاف الترقيم تمامًا."}, {"q_en": "List and briefly explain three factors affecting communication perspectives.", "q_ar": "اذكر واشرح باختصار ثلاثة عوامل تؤثر على وجهات نظر التواصل.", "a_en": "1. Visual Perception: Ability to see and interpret info. 2. Prejudices: Unfavorable feelings based on personal traits. 3. Environment: The setting dictates formality and comfort.", "a_ar": "1. الإدراك البصري: القدرة على رؤية وتفسير المعلومات. 2. التحيزات: مشاعر غير مرغوب فيها بناءً على الصفات الشخصية. 3. البيئة: يحدد المكان مستوى الرسمية والراحة."}]}, {"id": "L4", "title_en": "Basic Listening Skills", "title_ar": "مهارات الاستماع الأساسية", "outcomes_en": ["Introduction", "Reasons for Listening", "Benefits of Improving Listening", "Self-Awareness", "Active Listening", "Steps to Becoming an Active Listener"], "outcomes_ar": ["مقدمة", "أسباب الاستماع", "فوائد تحسين الاستماع", "الوعي الذاتي", "الاستماع الفعال", "خطوات لتصبح مستمعًا فعالاً"], "content_en": "Introduction to Basic Listening Skills:\nA person who is able to listen and understand is capable of accurately understanding and interpreting communication. Listening is the foundation of effective communication. If you are incapable of listening effectively, you will often misunderstand a message. Listening effectively is important to developing successful relationships. Information and ideas are acquired through active listening. During listening, it is important that the listener understands and responds. As well as receiving and understanding what has been said, listening also involves responding to what has been said. A skill we can all learn is how to listen effectively. The ability to listen contributes to our feeling of well-being and improves our relationships to a great extent.\n\nWe listen for multiple reasons:\n1. To understand Others.\n2. To gather information.\n3. To learn.\n4. To show empathy.\n5. To build relationships.\n\nThe benefit of Improving our Listening:\n1. We can become more productive at work.\n2. We can become more connected in our relationships.\n3. Listening helps us to negotiate with others.\n4. Listening helps us to avoid misunderstanding.\n5. Listening makes life conflict-free.\n\nImproving our Listening:\n1. Self-Awareness:\nAn important tool for becoming a good listener is becoming aware of your own behavior and feelings when listening. So, if you are tense and not relaxed, or you look down or away, or if you are planning what you will say in return - all of these behaviors make it difficult to be a good listener.\n\n2. Active Listening:\nActive listening means being as attentive and involved in the conversation during the times that you are listening as when you are speaking. You must learn to be consciously attentive to relay. In order to do this you must pay close attention to the speaker.\n\nSteps to Becoming an Active Listener:\nThere are 5 steps to become an active listener:\n1. Pay Close Attention:\nLook the speaker in the eyes. Stop any mental chatter. Don't start preparing your response while the other person is talking. Notice the speaker's body language and tone of voice - what are the non-verbal messages telling you.\n\n2. Demonstrate Physically that you are listening:\nNod from time to time, when appropriate. Use appropriate facial expressions. Monitor your own body language. Be sure you remain relaxed rather than tense. Use small comments like 'uh', 'yes', 'right'.\n\n3. Check for Understanding:\nAs we learned before, our personal experience, perceptions, and feelings can influence the way that we hear. It is possible for the message to get mistranslated. Before responding, it's important to check for understanding using reflecting and paraphrasing. Check that you heard correctly by saying: 'What I hear you saying is...', or 'If I am hearing you correctly, you're saying...', or 'I think you are talking about...'\n\n4. Don't Interrupt:\nThere is nothing good that comes from interrupting the speaker. You will only be limiting your chance of understanding the message because you won't hear it all, and the speaker will get frustrated.\n\n5. Respond Appropriately:\nWhen you are actively listening, you are showing your respect for the speaker, as well as gaining the information that you need to form your response. Once you have that information and have clarified it, it's time to form your reply. When expressing your thoughts: Be honest (truthful), Be respectful, Remember that you are modeling excellent behavior for others.", "content_ar": "مقدمة في مهارات الاستماع الأساسية:\nالشخص القادر على الاستماع والفهم قادر على فهم وتفسير التواصل بدقة. الاستماع هو أساس التواصل الفعال. إذا كنت غير قادر على الاستماع بفعالية، فغالبًا ما ستفهم الرسالة بشكل خاطئ. الاستماع بفعالية مهم لتطوير علاقات ناجحة. يتم اكتساب المعلومات والأفكار من خلال الاستماع الفعال. أثناء الاستماع، من المهم أن يفهم المستمع ويستجيب. بالإضافة إلى تلقي وفهم ما قيل، يتضمن الاستماع أيضًا الاستجابة لما قيل. مهارة يمكننا جميعًا تعلمها هي كيفية الاستماع بفعالية. القدرة على الاستماع تساهم في شعورنا بالرفاهية وتحسن علاقاتنا إلى حد كبير.\n\nنحن نستمع لعدة أسباب:\n1. لفهم الآخرين.\n2. لجمع المعلومات.\n3. للتعلم.\n4. لإظهار التعاطف.\n5. لبناء العلاقات.\n\nفائدة تحسين استماعنا:\n1. يمكننا أن نصبح أكثر إنتاجية في العمل.\n2. يمكننا أن نصبح أكثر ترابطًا في علاقاتنا.\n3. الاستماع يساعدنا على التفاوض مع الآخرين.\n4. الاستماع يساعدنا على تجنب سوء الفهم.\n5. الاستماع يجعل الحياة خالية من النزاعات.\n\nتحسين استماعنا:\n1. الوعي الذاتي (Self-Awareness):\nأداة مهمة لتصبح مستمعًا جيدًا هي إدراك سلوكك ومشاعرك عند الاستماع. لذلك، إذا كنت متوترًا وغير مسترخٍ، أو كنت تنظر لأسفل أو بعيدًا، أو إذا كنت تخطط لما ستقوله كرد - كل هذه السلوكيات تجعل من الصعب أن تكون مستمعًا جيدًا.\n\n2. الاستماع الفعال (Active Listening):\nيعني الاستماع الفعال أن تكون منتبهًا ومشاركًا في المحادثة خلال الأوقات التي تستمع فيها كما هو الحال عندما تتحدث. يجب أن تتعلم أن تكون منتبهًا بوعي للنقل. للقيام بذلك، يجب أن تولي اهتمامًا وثيقًا للمتحدث.\n\nخطوات لتصبح مستمعًا فعالاً:\nهناك 5 خطوات لتصبح مستمعًا فعالاً:\n1. انتبه بشدة (Pay Close Attention):\nانظر في عيني المتحدث. أوقف أي ثرثرة عقلية. لا تبدأ في إعداد ردك بينما يتحدث الشخص الآخر. لاحظ لغة جسد المتحدث ونبرة صوته - ما هي الرسائل غير اللفظية التي تخبرك بها.\n\n2. أظهر جسديًا أنك تستمع (Demonstrate Physically):\nأومئ برأسك من وقت لآخر، عند الاقتضاء. استخدم تعبيرات الوجه المناسبة. راقب لغة جسدك. تأكد من أنك تظل مسترخيًا بدلاً من التوتر. استخدم تعليقات صغيرة مثل 'آه'، 'نعم'، 'صحيح'.\n\n3. تحقق من الفهم (Check for Understanding):\nكما تعلمنا من قبل، يمكن لتجربتنا الشخصية وتصوراتنا ومشاعرنا أن تؤثر على الطريقة التي نسمع بها. من الممكن أن تتم ترجمة الرسالة بشكل خاطئ. قبل الرد، من المهم التحقق من الفهم باستخدام الانعكاس وإعادة الصياغة. تحقق من أنك سمعت بشكل صحيح بالقول: 'ما أسمعك تقوله هو...'، أو 'إذا كنت أسمعك بشكل صحيح، فأنت تقول...'، أو 'أعتقد أنك تتحدث عن...'\n\n4. لا تقاطع (Don't Interrupt):\nلا شيء جيد يأتي من مقاطعة المتحدث. ستحد فقط من فرصتك في فهم الرسالة لأنك لن تسمعها كلها، وسيشعر المتحدث بالإحباط.\n\n5. استجب بشكل مناسب (Respond Appropriately):\nعندما تستمع بفعالية، فإنك تظهر احترامك للمتحدث، فضلاً عن اكتساب المعلومات التي تحتاجها لتشكيل ردك. بمجرد حصولك على هذه المعلومات وتوضيحها، حان الوقت لتشكيل ردك. عند التعبير عن أفكارك: كن صادقًا (حقيقيًا)، كن محترمًا، تذكر أنك تقدم نموذجًا لسلوك ممتاز للآخرين.", "simplified_notes_en": "Listening is the core of good communication. If you don't listen, you misunderstand.\nWhy we listen: To understand, gather info, learn, show empathy, and build relationships.\nBenefits: Better productivity, stronger relationships, better negotiation, less conflict.\nHow to improve:\n1. Self-Awareness: Notice if you are tense, looking away, or just waiting to talk.\n2. Active Listening: Being fully present.\n5 Steps to Active Listening:\n1. Pay attention (eye contact, stop thinking about your reply).\n2. Show you are listening (nodding, saying 'yes').\n3. Check understanding (say 'If I hear you correctly...').\n4. Do not interrupt (it frustrates the speaker).\n5. Respond appropriately (honest and respectful).", "simplified_notes_ar": "الاستماع هو جوهر التواصل الجيد. إذا لم تستمع، فسوف تسيء الفهم.\nلماذا نستمع: للفهم، جمع المعلومات، التعلم، إظهار التعاطف، وبناء العلاقات.\nالفوائد: إنتاجية أفضل، علاقات أقوى، تفاوض أفضل، نزاع أقل.\nكيفية التحسين:\n1. الوعي الذاتي: لاحظ ما إذا كنت متوترًا، تنظر بعيدًا، أو تنتظر فقط التحدث.\n2. الاستماع الفعال: التواجد الكامل في المحادثة.\n5 خطوات للاستماع الفعال:\n1. انتبه (التواصل البصري، توقف عن التفكير في ردك).\n2. أظهر أنك تستمع (الإيماء بالرأس، قول 'نعم').\n3. تحقق من الفهم (قل 'إذا كنت أسمعك بشكل صحيح...').\n4. لا تقاطع (هذا يحبط المتحدث).\n5. استجب بشكل مناسب (صادق ومحترم).", "key_concepts": [{"term_en": "Active Listening", "term_ar": "الاستماع الفعال", "def_en": "Being as attentive and involved in the conversation while listening as when speaking.", "def_ar": "أن تكون منتبهًا ومشاركًا في المحادثة أثناء الاستماع كما هو الحال عند التحدث."}, {"term_en": "Self-Awareness (in listening)", "term_ar": "الوعي الذاتي (في الاستماع)", "def_en": "Becoming aware of your own behavior and feelings when listening, such as being tense or planning your response.", "def_ar": "إدراك سلوكك ومشاعرك عند الاستماع، مثل التوتر أو التخطيط لردك."}, {"term_en": "Paraphrasing", "term_ar": "إعادة الصياغة", "def_en": "Checking for understanding by repeating back what you heard in your own words.", "def_ar": "التحقق من الفهم عن طريق تكرار ما سمعته بكلماتك الخاصة."}], "exam_notes_en": ["Know the 5 steps of active listening in order.", "Remember the 5 reasons why we listen.", "Understand that planning what you will say while the other person is talking is a bad listening habit."], "exam_notes_ar": ["اعرف خطوات الاستماع الفعال الخمس بالترتيب.", "تذكر الأسباب الخمسة التي تجعلنا نستمع.", "افهم أن التخطيط لما ستقوله بينما يتحدث الشخص الآخر هو عادة استماع سيئة."], "flashcards": [{"q_en": "What is the foundation of effective communication?", "q_ar": "ما هو أساس التواصل الفعال؟", "a_en": "Listening.", "a_ar": "الاستماع."}, {"q_en": "Name 3 reasons why we listen.", "q_ar": "اذكر 3 أسباب لماذا نستمع.", "a_en": "To understand, gather info, learn, show empathy, build relationships.", "a_ar": "للفهم، لجمع المعلومات، للتعلم، لإظهار التعاطف، لبناء العلاقات."}, {"q_en": "What are the 5 steps to Active Listening?", "q_ar": "ما هي الخطوات الخمس للاستماع الفعال؟", "a_en": "1. Pay Close Attention 2. Demonstrate Physically 3. Check for Understanding 4. Don't Interrupt 5. Respond Appropriately", "a_ar": "1. انتبه بشدة 2. أظهر جسديًا 3. تحقق من الفهم 4. لا تقاطع 5. استجب بشكل مناسب"}, {"q_en": "How can you 'Check for Understanding'?", "q_ar": "كيف يمكنك 'التحقق من الفهم'؟", "a_en": "By reflecting and paraphrasing, saying 'What I hear you saying is...'", "a_ar": "عن طريق الانعكاس وإعادة الصياغة، وقول 'ما أسمعك تقوله هو...'"}, {"q_en": "Why is 'planning your response' considered bad?", "q_ar": "لماذا يعتبر 'التخطيط لردك' سيئًا؟", "a_en": "It means you lack self-awareness and are not paying close attention to the speaker.", "a_ar": "هذا يعني أنك تفتقر إلى الوعي الذاتي ولا تولي اهتمامًا وثيقًا للمتحدث."}], "quizzes": {"mcq": [{"q_en": "What is the first step to becoming an active listener?", "q_ar": "ما هي الخطوة الأولى لتصبح مستمعًا فعالاً؟", "options_en": ["A) Don't interrupt", "B) Pay close attention", "C) Respond appropriately", "D) Check for understanding"], "options_ar": ["أ) لا تقاطع", "ب) انتبه بشدة", "ج) استجب بشكل مناسب", "د) تحقق من الفهم"], "answer_index": 1, "explanation_en": "The first step is to pay close attention by looking the speaker in the eyes and stopping mental chatter.", "explanation_ar": "الخطوة الأولى هي الانتباه الشديد من خلال النظر في عيني المتحدث وإيقاف الثرثرة العقلية."}, {"q_en": "Which of the following is a physical demonstration of active listening?", "q_ar": "أي مما يلي هو عرض مادي (جسدي) للاستماع الفعال؟", "options_en": ["A) Interrupting the speaker", "B) Nodding from time to time", "C) Planning your response", "D) Looking down or away"], "options_ar": ["أ) مقاطعة المتحدث", "ب) الإيماء بالرأس من وقت لآخر", "ج) التخطيط لردك", "د) النظر لأسفل أو بعيدًا"], "answer_index": 1, "explanation_en": "Nodding from time to time demonstrates physically that you are listening.", "explanation_ar": "الإيماء من وقت لآخر يظهر جسديًا أنك تستمع."}, {"q_en": "Which phrase is best used to 'Check for Understanding'?", "q_ar": "أي عبارة تستخدم بشكل أفضل 'للتحقق من الفهم'؟", "options_en": ["A) 'Let me interrupt you right there...'", "B) 'If I am hearing you correctly, you're saying...'", "C) 'I already know what you mean.'", "D) 'You are completely wrong.'"], "options_ar": ["أ) 'دعني أقاطعك هنا...'", "ب) 'إذا كنت أسمعك بشكل صحيح، فأنت تقول...'", "ج) 'أنا أعرف بالفعل ما تعنيه.'", "د) 'أنت مخطئ تمامًا.'"], "answer_index": 1, "explanation_en": "Using paraphrasing phrases helps check for understanding.", "explanation_ar": "استخدام عبارات إعادة الصياغة يساعد في التحقق من الفهم."}, {"q_en": "Being aware of your own behavior and feelings when listening is called:", "q_ar": "إدراك سلوكك ومشاعرك عند الاستماع يسمى:", "options_en": ["A) Self-Awareness", "B) Empathy", "C) Reflection", "D) Disruption"], "options_ar": ["أ) الوعي الذاتي", "ب) التعاطف", "ج) الانعكاس", "د) التعطيل"], "answer_index": 0, "explanation_en": "Self-awareness is checking if you are tense or planning responses instead of listening.", "explanation_ar": "الوعي الذاتي هو التحقق مما إذا كنت متوترًا أو تخطط للردود بدلاً من الاستماع."}, {"q_en": "Which of the following is a benefit of improving listening?", "q_ar": "أي مما يلي هو إحدى فوائد تحسين الاستماع؟", "options_en": ["A) Less productivity at work", "B) Increased conflict", "C) Avoiding misunderstanding", "D) Ignoring others"], "options_ar": ["أ) إنتاجية أقل في العمل", "ب) زيادة الصراع", "ج) تجنب سوء الفهم", "د) تجاهل الآخرين"], "answer_index": 2, "explanation_en": "Effective listening helps avoid misunderstandings and creates a conflict-free life.", "explanation_ar": "الاستماع الفعال يساعد على تجنب سوء الفهم ويخلق حياة خالية من النزاعات."}], "tf": [{"q_en": "Planning what you will say while the other person is speaking is a good listening habit.", "q_ar": "التخطيط لما ستقوله بينما يتحدث الشخص الآخر هو عادة استماع جيدة.", "answer": false, "explanation_en": "It is a bad habit because it prevents you from paying close attention.", "explanation_ar": "إنها عادة سيئة لأنها تمنعك من الانتباه الشديد."}, {"q_en": "Interrupting the speaker helps clarify the message faster.", "q_ar": "مقاطعة المتحدث تساعد في توضيح الرسالة بشكل أسرع.", "answer": false, "explanation_en": "Interrupting limits understanding and frustrates the speaker.", "explanation_ar": "المقاطعة تحد من الفهم وتحبط المتحدث."}, {"q_en": "Active listening means being as attentive when listening as when you are speaking.", "q_ar": "الاستماع الفعال يعني أن تكون منتبهًا عند الاستماع كما هو الحال عندما تتحدث.", "answer": true, "explanation_en": "You must be consciously attentive and involved in the conversation.", "explanation_ar": "يجب أن تكون منتبهًا ومشاركًا بوعي في المحادثة."}, {"q_en": "Information and ideas are acquired through active listening.", "q_ar": "يتم اكتساب المعلومات والأفكار من خلال الاستماع الفعال.", "answer": true, "explanation_en": "Active listening is the main way to acquire knowledge from others.", "explanation_ar": "الاستماع الفعال هو الطريقة الرئيسية لاكتساب المعرفة من الآخرين."}, {"q_en": "Checking for understanding is done by ignoring non-verbal messages.", "q_ar": "يتم التحقق من الفهم عن طريق تجاهل الرسائل غير اللفظية.", "answer": false, "explanation_en": "Checking for understanding involves reflecting and paraphrasing, while paying attention to non-verbal cues.", "explanation_ar": "يتضمن التحقق من الفهم التفكير وإعادة الصياغة، مع الانتباه إلى الإشارات غير اللفظية."}], "definitions": [{"q_en": "Define: Active Listening", "q_ar": "عرف: الاستماع الفعال", "a_en": "Being attentive and involved in the conversation while listening.", "a_ar": "الاهتمام والمشاركة في المحادثة أثناء الاستماع."}, {"q_en": "Define: Self-Awareness (in listening)", "q_ar": "عرف: الوعي الذاتي (في الاستماع)", "a_en": "Becoming aware of your own behavior and feelings, like tension or planning responses.", "a_ar": "إدراك سلوكك ومشاعرك، مثل التوتر أو تخطيط الردود."}], "short_answer": [{"q_en": "List the 5 steps to becoming an active listener.", "q_ar": "اذكر الخطوات الخمس لتصبح مستمعًا فعالاً.", "a_en": "1. Pay close attention 2. Demonstrate physically 3. Check for understanding 4. Don't interrupt 5. Respond appropriately.", "a_ar": "1. انتبه بشدة 2. أظهر جسديًا 3. تحقق من الفهم 4. لا تقاطع 5. استجب بشكل مناسب."}, {"q_en": "Why should you check for understanding before responding?", "q_ar": "لماذا يجب عليك التحقق من الفهم قبل الرد؟", "a_en": "Because personal perceptions can mistranslate the message. Paraphrasing ensures you heard the speaker correctly.", "a_ar": "لأن التصورات الشخصية يمكن أن تترجم الرسالة بشكل خاطئ. تضمن إعادة الصياغة أنك سمعت المتحدث بشكل صحيح."}]}, "expected_questions": [{"q_en": "Explain the concept of 'Checking for Understanding' in active listening.", "q_ar": "اشرح مفهوم 'التحقق من الفهم' في الاستماع الفعال.", "a_en": "It involves reflecting and paraphrasing what the speaker said using phrases like 'What I hear you saying is...' to prevent misunderstandings caused by personal filters.", "a_ar": "يتضمن التفكير وإعادة صياغة ما قاله المتحدث باستخدام عبارات مثل 'ما أسمعك تقوله هو...' لمنع سوء الفهم الناتج عن الفلاتر الشخصية."}, {"q_en": "Discuss how Self-Awareness improves listening skills.", "q_ar": "ناقش كيف يحسن الوعي الذاتي مهارات الاستماع.", "a_en": "By realizing you are tense, distracted, or planning your response instead of listening, you can stop these behaviors and refocus on the speaker.", "a_ar": "من خلال إدراك أنك متوتر أو مشتت الانتباه أو تخطط لردك بدلاً من الاستماع، يمكنك إيقاف هذه السلوكيات وإعادة التركيز على المتحدث."}]}, {"id": "L5", "title_en": "Effective Writing", "title_ar": "الكتابة الفعالة", "outcomes_en": ["Introduction to Effective Writing", "Definition of written communication", "Stages of writing process", "Sub-Skills of Writing", "When we use written communication"], "outcomes_ar": ["مقدمة في الكتابة الفعالة", "تعريف التواصل الكتابي", "مراحل عملية الكتابة", "المهارات الفرعية للكتابة", "متى نستخدم التواصل الكتابي"], "content_en": "Effective Writing:\nWriting skill is the ability to write accurately. It is a productive skill and involves producing language rather than receiving it. Writing skill is a specific ability which helps writers put their thoughts into words in a meaningful form.\n\nA Written Communication:\nMeans the sending of messages, orders, or instructions in writing through letters, reports, office memos, etc. It is a formal method of communication.\n\nStages of Writing Process:\n1. Prewriting: Prewriting is the stage of getting-ready-to-write. In this stage, the student chooses a topic and organizes ideas for writing.\n2. Drafting: The drafting stage is the time to write down ideas with little concern about spelling, punctuation, and other mechanical errors.\n3. Revision and Editing: Revision is the third stage; the writer refines ideas in his compositions. Activities in this stage include reading the rough draft in a writing group and revising on the basis of feedback. The Editing stage is the state of putting the piece of writing into its final form.\n\nSub-Skills of Writing:\nThe writing skill includes a number of sub-skills:\n1. Mechanics: Which includes handwriting, spelling, and punctuation.\n2. Word Selection: Which includes vocabulary, idioms, etc.\n3. Organization: Which includes paragraphs, topics.\n4. Syntax: Which includes sentence structure according to different grammatical rules.\n\nWhen we use written communication?\nWhen is written communication most effective and when is it not? There are a number of factors that can help you make that choice:\n1. Complexity of the topic: Using written communication is an excellent choice for sharing information that is easily understood by an independent reader. This means that the reader can read the communication and get the message clearly without additional information from you or other sources. Meeting notices, answers to quick questions, or quick clarifications are all easy to complete with written communication.\n2. Formal Communication: Written communication is still the common choice when there is a level of formality between two parties. For example, think about your customers or clients. Chances are that formal communication such as contract terms, sales agreements, account information, or other legal information will be transmitted in written communication.\n3. Highly Complex topics or lengthy explanation: Highly complex topics or lengthy explanations are NOT good choices for written communication. The amount of explanation required to make the information intelligible might be cumbersome leading to misinterpretation or lack of understanding. In these cases, you would have a face-to-face meeting or a formal training session.", "content_ar": "الكتابة الفعالة:\nمهارة الكتابة هي القدرة على الكتابة بدقة. إنها مهارة إنتاجية وتتضمن إنتاج اللغة بدلاً من تلقيها. مهارة الكتابة هي قدرة محددة تساعد الكتاب على وضع أفكارهم في كلمات في شكل ذي معنى.\n\nالتواصل الكتابي:\nيعني إرسال الرسائل أو الأوامر أو التعليمات كتابةً من خلال الرسائل والتقارير والمذكرات المكتبية وما إلى ذلك. إنها طريقة رسمية للتواصل.\n\nمراحل عملية الكتابة:\n1. ما قبل الكتابة (Prewriting): هي مرحلة الاستعداد للكتابة. في هذه المرحلة، يختار الطالب موضوعًا وينظم الأفكار للكتابة.\n2. الصياغة (Drafting): مرحلة الصياغة هي الوقت المناسب لتدوين الأفكار مع القليل من الاهتمام بالإملاء وعلامات الترقيم والأخطاء الميكانيكية الأخرى.\n3. المراجعة والتحرير (Revision and Editing): المراجعة هي المرحلة الثالثة؛ ينقح الكاتب الأفكار في مؤلفاته. تشمل الأنشطة في هذه المرحلة قراءة المسودة الأولية في مجموعة كتابة والمراجعة على أساس الملاحظات. مرحلة التحرير هي حالة وضع قطعة الكتابة في شكلها النهائي.\n\nالمهارات الفرعية للكتابة:\nتتضمن مهارة الكتابة عددًا من المهارات الفرعية:\n1. الميكانيكا (Mechanics): والتي تشمل خط اليد والإملاء وعلامات الترقيم.\n2. اختيار الكلمات (Word Selection): والذي يشمل المفردات والتعابير وما إلى ذلك.\n3. التنظيم (Organization): والذي يشمل الفقرات والمواضيع.\n4. بناء الجملة (Syntax): والذي يتضمن بنية الجملة وفقًا للقواعد النحوية المختلفة.\n\nمتى نستخدم التواصل الكتابي؟\nمتى يكون التواصل الكتابي أكثر فعالية ومتى لا يكون كذلك؟ هناك عدد من العوامل التي يمكن أن تساعدك في اتخاذ هذا الخيار:\n1. تعقيد الموضوع: يعد استخدام التواصل الكتابي خيارًا ممتازًا لمشاركة المعلومات التي يسهل على القارئ المستقل فهمها. هذا يعني أنه يمكن للقارئ قراءة الاتصال والحصول على الرسالة بوضوح دون معلومات إضافية منك. إشعارات الاجتماعات أو الردود على الأسئلة السريعة يسهل إكمالها من خلال التواصل الكتابي.\n2. التواصل الرسمي: لا يزال التواصل الكتابي هو الخيار الشائع عندما يكون هناك مستوى من الرسمية بين طرفين. على سبيل المثال، العقود واتفاقيات البيع والمعلومات القانونية يتم نقلها في تواصل كتابي.\n3. الموضوعات شديدة التعقيد أو الشرح المطول: المواضيع المعقدة ليست خيارات جيدة للتواصل الكتابي. مقدار الشرح المطلوب قد يؤدي إلى سوء التفسير أو عدم الفهم. في هذه الحالات، سيكون لديك اجتماع وجهًا لوجه.", "simplified_notes_en": "Effective writing is a productive skill that turns thoughts into meaningful words.\nWritten communication involves messages, reports, and memos, and is highly formal.\nThe Writing Process has 3 stages:\n1. Prewriting: Choosing a topic and organizing ideas.\n2. Drafting: Writing ideas quickly without worrying about spelling or grammar.\n3. Revising/Editing: Fixing ideas, grammar, and creating the final draft.\nThere are 4 main sub-skills of writing:\n- Mechanics (spelling, punctuation)\n- Word Selection (vocabulary)\n- Organization (paragraphs)\n- Syntax (sentence grammar)\nUse written communication for: simple, easily understood info (like a meeting notice) and formal legal documents (like contracts).\nDo NOT use written communication for: highly complex topics that need lots of explanation (use face-to-face meetings instead).", "simplified_notes_ar": "الكتابة الفعالة هي مهارة إنتاجية تحول الأفكار إلى كلمات ذات معنى.\nيتضمن التواصل الكتابي الرسائل والتقارير والمذكرات، وهو رسمي للغاية.\nعملية الكتابة لها 3 مراحل:\n1. ما قبل الكتابة: اختيار موضوع وتنظيم الأفكار.\n2. الصياغة: كتابة الأفكار بسرعة دون القلق بشأن الإملاء أو القواعد.\n3. المراجعة / التحرير: إصلاح الأفكار والقواعد النحوية وإنشاء المسودة النهائية.\nهناك 4 مهارات فرعية رئيسية للكتابة:\n- الميكانيكا (الإملاء، الترقيم)\n- اختيار الكلمات (المفردات)\n- التنظيم (الفقرات)\n- بناء الجملة (قواعد الجملة)\nاستخدم التواصل الكتابي من أجل: معلومات بسيطة ومفهومة (مثل إشعار اجتماع) والوثائق القانونية الرسمية (مثل العقود).\nلا تستخدم التواصل الكتابي من أجل: الموضوعات شديدة التعقيد التي تحتاج إلى الكثير من الشرح (استخدم الاجتماعات وجهًا لوجه بدلاً من ذلك).", "key_concepts": [{"term_en": "Prewriting", "term_ar": "ما قبل الكتابة", "def_en": "The stage of getting ready to write, choosing a topic, and organizing ideas.", "def_ar": "مرحلة الاستعداد للكتابة، واختيار موضوع، وتنظيم الأفكار."}, {"term_en": "Syntax", "term_ar": "بناء الجملة", "def_en": "Sentence structure according to different grammatical rules.", "def_ar": "بنية الجملة وفقًا للقواعد النحوية المختلفة."}, {"term_en": "Mechanics", "term_ar": "الميكانيكا", "def_en": "The sub-skill of writing that includes handwriting, spelling, and punctuation.", "def_ar": "المهارة الفرعية للكتابة التي تشمل خط اليد والإملاء وعلامات الترقيم."}], "exam_notes_en": ["Know the 3 stages of writing and what happens in each.", "Differentiate between the 4 sub-skills (Syntax vs Mechanics).", "Remember that highly complex topics are NOT good for written communication."], "exam_notes_ar": ["اعرف مراحل الكتابة الثلاث وما يحدث في كل منها.", "فرق بين المهارات الفرعية الأربع (بناء الجملة مقابل الميكانيكا).", "تذكر أن الموضوعات شديدة التعقيد ليست جيدة للتواصل الكتابي."], "flashcards": [{"q_en": "What are the 3 stages of the writing process?", "q_ar": "ما هي المراحل الثلاث لعملية الكتابة؟", "a_en": "1. Prewriting 2. Drafting 3. Revision and Editing.", "a_ar": "1. ما قبل الكتابة 2. الصياغة 3. المراجعة والتحرير."}, {"q_en": "What happens in the 'Drafting' stage?", "q_ar": "ماذا يحدث في مرحلة 'الصياغة'؟", "a_en": "Writing down ideas with little concern for spelling or mechanical errors.", "a_ar": "تدوين الأفكار مع القليل من الاهتمام بالإملاء أو الأخطاء الميكانيكية."}, {"q_en": "What sub-skill involves handwriting, spelling, and punctuation?", "q_ar": "ما هي المهارة الفرعية التي تتضمن خط اليد والإملاء وعلامات الترقيم؟", "a_en": "Mechanics.", "a_ar": "الميكانيكا."}, {"q_en": "What does 'Syntax' mean in writing?", "q_ar": "ماذا يعني 'بناء الجملة' في الكتابة؟", "a_en": "Sentence structure according to grammatical rules.", "a_ar": "بنية الجملة وفقًا للقواعد النحوية."}, {"q_en": "When should you NOT use written communication?", "q_ar": "متى يجب ألا تستخدم التواصل الكتابي؟", "a_en": "For highly complex topics or lengthy explanations.", "a_ar": "في الموضوعات شديدة التعقيد أو التفسيرات الطويلة."}], "quizzes": {"mcq": [{"q_en": "Which stage of writing is known as 'getting-ready-to-write'?", "q_ar": "أي مرحلة من مراحل الكتابة تُعرف باسم 'الاستعداد للكتابة'؟", "options_en": ["A) Revision", "B) Drafting", "C) Prewriting", "D) Syntax"], "options_ar": ["أ) المراجعة", "ب) الصياغة", "ج) ما قبل الكتابة", "د) بناء الجملة"], "answer_index": 2, "explanation_en": "Prewriting is the stage where the student chooses a topic and organizes ideas.", "explanation_ar": "ما قبل الكتابة هي المرحلة التي يختار فيها الطالب موضوعًا وينظم الأفكار."}, {"q_en": "Vocabulary and Idioms fall under which writing sub-skill?", "q_ar": "تندرج المفردات والتعابير تحت أي مهارة فرعية للكتابة؟", "options_en": ["A) Mechanics", "B) Word Selection", "C) Syntax", "D) Organization"], "options_ar": ["أ) الميكانيكا", "ب) اختيار الكلمات", "ج) بناء الجملة", "د) التنظيم"], "answer_index": 1, "explanation_en": "Word selection includes vocabulary and idioms.", "explanation_ar": "اختيار الكلمات يشمل المفردات والتعابير."}, {"q_en": "Writing is considered a ________ skill because it involves producing language.", "q_ar": "تعتبر الكتابة مهارة ________ لأنها تتضمن إنتاج اللغة.", "options_en": ["A) Productive", "B) Receptive", "C) Listening", "D) Visual"], "options_ar": ["أ) إنتاجية", "ب) استقبالية", "ج) استماع", "د) بصرية"], "answer_index": 0, "explanation_en": "Writing involves producing language, making it a productive skill.", "explanation_ar": "تتضمن الكتابة إنتاج اللغة، مما يجعلها مهارة إنتاجية."}, {"q_en": "Which of the following is an excellent reason to use written communication?", "q_ar": "أي مما يلي يعد سببًا ممتازًا لاستخدام التواصل الكتابي؟", "options_en": ["A) Lengthy explanations", "B) Highly complex topics", "C) Formal legal contracts", "D) Resolving an argument"], "options_ar": ["أ) شروحات مطولة", "ب) مواضيع شديدة التعقيد", "ج) عقود قانونية رسمية", "د) حل نزاع"], "answer_index": 2, "explanation_en": "Formal communication like contracts is best handled in writing.", "explanation_ar": "التواصل الرسمي مثل العقود يتم التعامل معه بشكل أفضل كتابةً."}, {"q_en": "During which stage do writers pay little concern to spelling and punctuation?", "q_ar": "خلال أي مرحلة لا يولي الكتاب اهتمامًا كبيرًا بالإملاء وعلامات الترقيم؟", "options_en": ["A) Editing", "B) Drafting", "C) Revision", "D) Organization"], "options_ar": ["أ) التحرير", "ب) الصياغة", "ج) المراجعة", "د) التنظيم"], "answer_index": 1, "explanation_en": "Drafting is for getting ideas down quickly, ignoring mechanics initially.", "explanation_ar": "الصياغة هي لتدوين الأفكار بسرعة، مع تجاهل الميكانيكا في البداية."}], "tf": [{"q_en": "Written communication is an informal method of communication.", "q_ar": "التواصل الكتابي هو طريقة غير رسمية للتواصل.", "answer": false, "explanation_en": "Written communication (memos, reports) is a formal method.", "explanation_ar": "التواصل الكتابي (المذكرات، التقارير) هو طريقة رسمية."}, {"q_en": "Syntax includes sentence structure according to grammatical rules.", "q_ar": "بناء الجملة يتضمن بنية الجملة وفقًا للقواعد النحوية.", "answer": true, "explanation_en": "Syntax is the sub-skill related to grammar and sentence structure.", "explanation_ar": "بناء الجملة هو المهارة الفرعية المتعلقة بالقواعد وبنية الجملة."}, {"q_en": "Highly complex topics are best explained using written communication.", "q_ar": "الموضوعات شديدة التعقيد يتم شرحها بشكل أفضل باستخدام التواصل الكتابي.", "answer": false, "explanation_en": "They lead to misinterpretation and are better suited for face-to-face meetings.", "explanation_ar": "إنها تؤدي إلى سوء التفسير وتكون أكثر ملاءمة للاجتماعات وجهًا لوجه."}, {"q_en": "Editing is the stage of putting the piece of writing into its final form.", "q_ar": "التحرير هو مرحلة وضع قطعة الكتابة في شكلها النهائي.", "answer": true, "explanation_en": "Editing finalizes the writing by correcting all errors.", "explanation_ar": "التحرير ينهي الكتابة عن طريق تصحيح جميع الأخطاء."}, {"q_en": "Handwriting and spelling are part of the 'Organization' sub-skill.", "q_ar": "الكتابة اليدوية والإملاء جزء من المهارة الفرعية 'التنظيم'.", "answer": false, "explanation_en": "They are part of the 'Mechanics' sub-skill.", "explanation_ar": "هم جزء من المهارة الفرعية 'الميكانيكا'."}], "definitions": [{"q_en": "Define: Drafting", "q_ar": "عرف: الصياغة", "a_en": "The stage of writing ideas down with little concern about mechanical errors.", "a_ar": "مرحلة تدوين الأفكار مع القليل من الاهتمام بالأخطاء الميكانيكية."}, {"q_en": "Define: Syntax", "q_ar": "عرف: بناء الجملة", "a_en": "Sentence structure according to different grammatical rules.", "a_ar": "بنية الجملة وفقًا للقواعد النحوية المختلفة."}], "short_answer": [{"q_en": "What are the 4 sub-skills of writing?", "q_ar": "ما هي المهارات الفرعية الأربع للكتابة؟", "a_en": "1. Mechanics 2. Word Selection 3. Organization 4. Syntax.", "a_ar": "1. الميكانيكا 2. اختيار الكلمات 3. التنظيم 4. بناء الجملة."}, {"q_en": "Why are highly complex topics a bad choice for written communication?", "q_ar": "لماذا تعد الموضوعات شديدة التعقيد خيارًا سيئًا للتواصل الكتابي؟", "a_en": "Because the amount of explanation needed might lead to misinterpretation or lack of understanding.", "a_ar": "لأن مقدار الشرح المطلوب قد يؤدي إلى سوء التفسير أو عدم الفهم."}]}, "expected_questions": [{"q_en": "Explain the difference between the Prewriting and Drafting stages.", "q_ar": "اشرح الفرق بين مرحلتي ما قبل الكتابة والصياغة.", "a_en": "Prewriting is choosing a topic and organizing ideas, whereas Drafting is rapidly writing those ideas down without worrying about spelling or grammar.", "a_ar": "ما قبل الكتابة هو اختيار موضوع وتنظيم الأفكار، في حين أن الصياغة هي كتابة تلك الأفكار بسرعة دون القلق بشأن الإملاء أو القواعد."}, {"q_en": "List the three main factors that help you choose when to use written communication.", "q_ar": "اذكر العوامل الثلاثة الرئيسية التي تساعدك على اختيار متى تستخدم التواصل الكتابي.", "a_en": "1. Complexity of the topic (good for simple info). 2. Formal Communication (good for contracts). 3. Highly complex topics (bad for writing, better face-to-face).", "a_ar": "1. تعقيد الموضوع (جيد للمعلومات البسيطة). 2. التواصل الرسمي (جيد للعقود). 3. المواضيع شديدة التعقيد (سيئة للكتابة، أفضل وجهًا لوجه)."}]}, {"id": "L6-7", "title_en": "Types of Communication & Business Report", "title_ar": "أنواع التواصل وتقارير الأعمال", "outcomes_en": ["Types of Communication", "Formal & Informal Communication", "Business Report", "Why do We Write Reports", "Types of Reports", "Characteristics of Business Reports", "Stages of Report Writing"], "outcomes_ar": ["أنواع التواصل", "التواصل الرسمي وغير الرسمي", "تقارير الأعمال", "لماذا نكتب التقارير", "أنواع التقارير", "خصائص تقارير الأعمال", "مراحل كتابة التقرير"], "content_en": "Types of Communication:\nBased on purpose and style, there are two main categories of communication:\n1. Formal Communication: Also known as official communication. Certain rules, conventions, and principles are followed. It is used in professional settings (e.g., corporate meetings, conferences, business letters, reports). In formal communication, we avoid slang and foul language, and we use correct pronunciation and authority lines.\n2. Informal Communication: Known as grapevine communication. It is casual talk established for the social affiliation of members in an organization and face-to-face discussions among friends or family. Use of slang words is not restricted, and it is usually done orally. It helps in finding out staff grievances and building relationships.\n\nBusiness Report:\nReports are a valuable business communication tool because they help people exchange details and make decisions. A business report is a formal communication written for a specific purpose that includes a description of procedures followed for collection and analysis of data, their significance, the conclusions drawn, and recommendations. It helps interested persons get insight into the problem and assists in decision-making and problem-solving.\n\nWhy do We Write Reports:\n1. To carry business information to relevant parties.\n2. To analyze data for interpretation.\n3. To help planning by providing factual information.\n5. To help decision-making.\n6. To establish effective control systems.\n7. To reduce and resolve organizational disputes (conflict).\n8. To find out the reasons behind a problem.\n\nTypes of Reports:\n- Monthly reports: document progress toward achieving goals.\n- Annual Reports: Provide shareholders and potential investors with information on how the company has been performing and how it expects to grow.\n- Technical Reports: communicate technical information.\n- Funding Reports: focus on monitoring the money received.\n- Organizational Reports: vary from status, progress, daily, weekly, monthly, and annual reports.\n\nCharacteristics of Business Report:\n1. Specific Issue: Written to fulfill a certain need.\n2. Specific Structure or Layout.\n3. Pre-Specified Audience: Written for a limited number of audience.\n4. Written on Past Events: Carries reasons for past incidents, written in past tense.\n5. Maintained Neutral: Strict impartiality must be maintained; biased reports lead to disastrous decisions.\n6. Factual Information: Based on collected facts.\n7. Joint Effort: Sometimes the outcome of joint efforts (a committee of 3-7 people).\n\nStages of Report Writing:\n1. Planning: Define purpose/scope, consider audience, gather info, design structure.\n2. Writing: Use tips/techniques, avoid traps, write the report.\n3. Revising: Proofread content, do a quality check.\n\nBusiness Report Example Structure:\n- Title Page\n- Executive Summary: Brief overview of purpose, findings, conclusions. No more than one page.\n- Table of Contents\n- Introduction: Background, Purpose, Scope.\n- Methodology: Methods used to gather data (surveys, analytical models).\n- Findings and Analysis.", "content_ar": "أنواع التواصل:\nبناءً على الغرض والأسلوب، هناك فئتان رئيسيتان للتواصل:\n1. التواصل الرسمي (Formal Communication): يُعرف أيضًا بالتواصل الرسمي. يتم اتباع قواعد واتفاقيات ومبادئ معينة. يستخدم في البيئات المهنية (مثل اجتماعات الشركات، المؤتمرات، رسائل الأعمال، التقارير). في التواصل الرسمي، نتجنب العامية واللغة البذيئة، ونستخدم النطق الصحيح وخطوط السلطة.\n2. التواصل غير الرسمي (Informal Communication): يُعرف باسم تواصل الشائعات (grapevine). إنه حديث غير رسمي يتم تأسيسه للانتماء الاجتماعي للأعضاء في مؤسسة والمناقشات وجهًا لوجه بين الأصدقاء أو العائلة. استخدام الكلمات العامية غير مقيد، وعادة ما يتم شفهيًا. يساعد في معرفة تظلمات الموظفين وبناء العلاقات.\n\nتقارير الأعمال (Business Report):\nالتقارير هي أداة تواصل تجاري قيمة لأنها تساعد الأشخاص على تبادل التفاصيل واتخاذ القرارات. تقرير العمل هو تواصل رسمي مكتوب لغرض محدد يتضمن وصفًا للإجراءات المتبعة لجمع البيانات وتحليلها، وأهميتها، والاستنتاجات المستخلصة، والتوصيات. يساعد الأشخاص المهتمين في الحصول على نظرة ثاقبة للمشكلة ويساعد في اتخاذ القرار وحل المشكلات.\n\nلماذا نكتب التقارير:\n1. لنقل معلومات العمل للأطراف ذات الصلة.\n2. لتحليل البيانات لتفسيرها.\n3. للمساعدة في التخطيط من خلال توفير معلومات واقعية.\n5. للمساعدة في اتخاذ القرار.\n6. لإنشاء أنظمة تحكم فعالة.\n7. للحد من النزاعات التنظيمية وحلها.\n8. لمعرفة الأسباب الكامنة وراء المشكلة.\n\nأنواع التقارير:\n- التقارير الشهرية: توثق التقدم نحو تحقيق الأهداف.\n- التقارير السنوية: تزود المساهمين والمستثمرين المحتملين بمعلومات حول أداء الشركة وكيف تتوقع أن تنمو.\n- التقارير الفنية: تنقل المعلومات الفنية.\n- تقارير التمويل: تركز على مراقبة الأموال المستلمة.\n- التقارير التنظيمية: تتنوع من تقارير الحالة، التقدم، اليومية، الأسبوعية، الشهرية، والسنوية.\n\nخصائص تقرير الأعمال:\n1. قضية محددة: مكتوبة لتلبية حاجة معينة.\n2. هيكل أو تخطيط محدد.\n3. جمهور محدد مسبقًا: يُكتب لعدد محدود من الجمهور.\n4. مكتوب عن أحداث ماضية: يحمل أسباب الحوادث الماضية، ومكتوب بصيغة الماضي.\n5. الحفاظ على الحياد: يجب الحفاظ على الحياد التام؛ التقارير المتحيزة تؤدي إلى قرارات كارثية.\n6. معلومات واقعية: بناءً على حقائق مجمعة.\n7. جهد مشترك: في بعض الأحيان نتيجة لجهود مشتركة (لجنة من 3-7 أشخاص).\n\nمراحل كتابة التقرير:\n1. التخطيط: تحديد الغرض/النطاق، مراعاة الجمهور، جمع المعلومات، تصميم الهيكل.\n2. الكتابة: استخدام النصائح/التقنيات، تجنب الفخاخ، كتابة التقرير.\n3. المراجعة: تدقيق المحتوى، فحص الجودة.\n\nهيكل مثال لتقرير العمل:\n- صفحة العنوان\n- الملخص التنفيذي: نظرة عامة موجزة عن الغرض، النتائج، الاستنتاجات. لا يزيد عن صفحة واحدة.\n- جدول المحتويات\n- المقدمة: الخلفية، الغرض، النطاق.\n- المنهجية: الطرق المستخدمة لجمع البيانات.\n- النتائج والتحليل.", "simplified_notes_en": "Communication Types:\n- Formal: Official, follows rules, no slang. Used for business meetings and reports.\n- Informal: Grapevine, casual talk, slang allowed. Builds relationships.\nBusiness Reports:\n- Formal documents written to help people exchange details, solve problems, and make decisions.\nTypes of Reports:\n- Annual (for investors/shareholders), Monthly (progress), Technical, Funding, Organizational.\nReport Characteristics:\n- Must be Neutral (impartial).\n- Based on Factual Info and Past Events.\n- Aimed at a Pre-specified Audience.\n3 Stages of Writing:\n1. Planning (gather info, audience).\n2. Writing.\n3. Revising (proofread).\nReport Structure includes: Executive Summary (max 1 page), Intro, Methodology, and Findings.", "simplified_notes_ar": "أنواع التواصل:\n- رسمي: رسمي، يتبع القواعد، بدون عامية. يستخدم لاجتماعات العمل والتقارير.\n- غير رسمي: شائعات، حديث غير رسمي، مسموح بالعامية. يبني العلاقات.\nتقارير الأعمال:\n- وثائق رسمية مكتوبة لمساعدة الناس على تبادل التفاصيل وحل المشكلات واتخاذ القرارات.\nأنواع التقارير:\n- سنوية (للمستثمرين/المساهمين)، شهرية (للتقدم)، فنية، تمويلية، تنظيمية.\nخصائص التقرير:\n- يجب أن يكون محايدًا (غير متحيز).\n- مبني على معلومات واقعية وأحداث ماضية.\n- موجه لجمهور محدد مسبقًا.\n3 مراحل للكتابة:\n1. التخطيط (جمع المعلومات، الجمهور).\n2. الكتابة.\n3. المراجعة (التدقيق).\nيتضمن هيكل التقرير: الملخص التنفيذي (كحد أقصى صفحة واحدة)، المقدمة، المنهجية، والنتائج.", "key_concepts": [{"term_en": "Informal Communication", "term_ar": "التواصل غير الرسمي", "def_en": "Casual talk, also known as grapevine communication, established for social affiliation.", "def_ar": "حديث غير رسمي، يُعرف أيضًا بتواصل الشائعات، تم إنشاؤه للانتماء الاجتماعي."}, {"term_en": "Executive Summary", "term_ar": "الملخص التنفيذي", "def_en": "A brief overview of the report's purpose, findings, and conclusions, usually not more than one page.", "def_ar": "نظرة عامة موجزة عن غرض التقرير ونتائجه واستنتاجاته، عادة لا تزيد عن صفحة واحدة."}, {"term_en": "Maintained Neutral", "term_ar": "الحفاظ على الحياد", "def_en": "A characteristic of business reports where strict impartiality must be maintained to avoid disastrous decisions.", "def_ar": "إحدى خصائص تقارير الأعمال حيث يجب الحفاظ على الحياد التام لتجنب القرارات الكارثية."}], "exam_notes_en": ["Know the difference between Formal (official, no slang) and Informal (grapevine, slang allowed) communication.", "Memorize the 7 characteristics of a Business Report (e.g., Past Events, Neutral).", "The Executive Summary must NEVER exceed one page."], "exam_notes_ar": ["اعرف الفرق بين التواصل الرسمي (رسمي، بدون عامية) وغير الرسمي (شائعات، عامية مسموحة).", "احفظ الخصائص السبع لتقرير العمل (مثل: الأحداث الماضية، الحياد).", "يجب ألا يتجاوز الملخص التنفيذي أبدًا صفحة واحدة."], "flashcards": [{"q_en": "What is another name for Informal Communication?", "q_ar": "ما هو الاسم الآخر للتواصل غير الرسمي؟", "a_en": "Grapevine communication.", "a_ar": "تواصل الشائعات (Grapevine)."}, {"q_en": "What type of report is written for shareholders and potential investors?", "q_ar": "ما نوع التقرير المكتوب للمساهمين والمستثمرين المحتملين؟", "a_en": "Annual Reports.", "a_ar": "التقارير السنوية."}, {"q_en": "Why must a business report be maintained neutral?", "q_ar": "لماذا يجب أن يظل تقرير العمل محايدًا؟", "a_en": "Because biased reports may lead to disastrous decisions.", "a_ar": "لأن التقارير المتحيزة قد تؤدي إلى قرارات كارثية."}, {"q_en": "What is the maximum length of an Executive Summary?", "q_ar": "ما هو الحد الأقصى لطول الملخص التنفيذي؟", "a_en": "No more than one page.", "a_ar": "لا يزيد عن صفحة واحدة."}, {"q_en": "What are the 3 stages of Report Writing?", "q_ar": "ما هي المراحل الثلاث لكتابة التقرير؟", "a_en": "1. Planning 2. Writing 3. Revising", "a_ar": "1. التخطيط 2. الكتابة 3. المراجعة"}], "quizzes": {"mcq": [{"q_en": "Which type of communication is known as grapevine communication?", "q_ar": "أي نوع من أنواع التواصل يُعرف بتواصل الشائعات؟", "options_en": ["A) Technical Communication", "B) Formal Communication", "C) Business Communication", "D) Informal Communication"], "options_ar": ["أ) التواصل الفني", "ب) التواصل الرسمي", "ج) تواصل الأعمال", "د) التواصل غير الرسمي"], "answer_index": 3, "explanation_en": "Informal communication is casual talk, often called the grapevine.", "explanation_ar": "التواصل غير الرسمي هو حديث غير رسمي، يُطلق عليه غالبًا الشائعات."}, {"q_en": "Reports written for potential investors to show how the company performs are:", "q_ar": "التقارير المكتوبة للمستثمرين المحتملين لإظهار أداء الشركة هي:", "options_en": ["A) Technical Reports", "B) Funding Reports", "C) Annual Reports", "D) Monthly Reports"], "options_ar": ["أ) التقارير الفنية", "ب) تقارير التمويل", "ج) التقارير السنوية", "د) التقارير الشهرية"], "answer_index": 2, "explanation_en": "Annual reports provide yearly performance data to investors.", "explanation_ar": "توفر التقارير السنوية بيانات الأداء السنوي للمستثمرين."}, {"q_en": "Which of the following is NOT a characteristic of a Business Report?", "q_ar": "أي مما يلي لا يعتبر من خصائص تقرير الأعمال؟", "options_en": ["A) Maintained Neutral", "B) Written on Future Events", "C) Specific Issue", "D) Factual Information"], "options_ar": ["أ) الحفاظ على الحياد", "ب) مكتوب عن أحداث مستقبلية", "ج) قضية محددة", "د) معلومات واقعية"], "answer_index": 1, "explanation_en": "Business reports are written on PAST events, not future events.", "explanation_ar": "تتم كتابة تقارير الأعمال عن الأحداث الماضية، وليس الأحداث المستقبلية."}, {"q_en": "In the structure of a business report, which section outlines the methods used to gather data?", "q_ar": "في هيكل تقرير الأعمال، أي قسم يوضح الطرق المستخدمة لجمع البيانات؟", "options_en": ["A) Executive Summary", "B) Introduction", "C) Methodology", "D) Findings"], "options_ar": ["أ) الملخص التنفيذي", "ب) المقدمة", "ج) المنهجية", "د) النتائج"], "answer_index": 2, "explanation_en": "Methodology explains the research tools and methods used to gather data.", "explanation_ar": "تشرح المنهجية أدوات وطرق البحث المستخدمة لجمع البيانات."}, {"q_en": "Biased business reports may lead to:", "q_ar": "تقارير الأعمال المتحيزة قد تؤدي إلى:", "options_en": ["A) Better teamwork", "B) Disastrous decisions", "C) Grapevine communication", "D) Increased funding"], "options_ar": ["أ) عمل جماعي أفضل", "ب) قرارات كارثية", "ج) تواصل الشائعات", "د) زيادة التمويل"], "answer_index": 1, "explanation_en": "Strict impartiality must be maintained because biased reports lead to disastrous decisions.", "explanation_ar": "يجب الحفاظ على الحياد التام لأن التقارير المتحيزة تؤدي إلى قرارات كارثية."}], "tf": [{"q_en": "Slang and foul language are completely acceptable in formal communication.", "q_ar": "الكلمات العامية واللغة البذيئة مقبولة تمامًا في التواصل الرسمي.", "answer": false, "explanation_en": "In formal communication, we avoid slang and foul language.", "explanation_ar": "في التواصل الرسمي، نتجنب الكلمات العامية واللغة البذيئة."}, {"q_en": "An Executive Summary should be concise and no more than one page.", "q_ar": "يجب أن يكون الملخص التنفيذي موجزًا ولا يزيد عن صفحة واحدة.", "answer": true, "explanation_en": "It is a brief overview and must be kept to one page maximum.", "explanation_ar": "إنها نظرة عامة موجزة ويجب الاحتفاظ بها في صفحة واحدة كحد أقصى."}, {"q_en": "Business reports are generally written on past events using past tense.", "q_ar": "عادة ما تتم كتابة تقارير الأعمال عن الأحداث الماضية باستخدام صيغة الماضي.", "answer": true, "explanation_en": "They carry reasons for past incidents.", "explanation_ar": "إنها تحمل أسباب الحوادث الماضية."}, {"q_en": "Informal communication helps in finding out staff grievances.", "q_ar": "يساعد التواصل غير الرسمي في اكتشاف شكاوى الموظفين.", "answer": true, "explanation_en": "People express more when talking informally, helping to find grievances.", "explanation_ar": "يعبر الناس أكثر عند التحدث بشكل غير رسمي، مما يساعد في اكتشاف التظلمات."}, {"q_en": "The revising stage of report writing includes gathering information.", "q_ar": "تشمل مرحلة المراجعة لكتابة التقرير جمع المعلومات.", "answer": false, "explanation_en": "Gathering info is done in the Planning stage. Revising is for proofreading.", "explanation_ar": "يتم جمع المعلومات في مرحلة التخطيط. المراجعة مخصصة للتدقيق."}], "definitions": [{"q_en": "Define: Formal Communication", "q_ar": "عرف: التواصل الرسمي", "a_en": "Official communication where certain rules and conventions are followed, avoiding slang.", "a_ar": "التواصل الرسمي حيث يتم اتباع قواعد واتفاقيات معينة، مع تجنب العامية."}, {"q_en": "Define: Business Report", "q_ar": "عرف: تقرير الأعمال", "a_en": "An organized, written statement of facts related to a specific business matter, used to assist in decision-making.", "a_ar": "بيان حقائق مكتوب ومنظم يتعلق بمسألة عمل معينة، يُستخدم للمساعدة في اتخاذ القرارات."}], "short_answer": [{"q_en": "What are 3 characteristics of a business report?", "q_ar": "ما هي 3 من خصائص تقرير العمل؟", "a_en": "1. Specific Issue 2. Maintained Neutral 3. Written on Past Events", "a_ar": "1. قضية محددة 2. الحفاظ على الحياد 3. مكتوب عن أحداث ماضية"}, {"q_en": "What is the purpose of the Methodology section in a report?", "q_ar": "ما هو الغرض من قسم المنهجية في التقرير؟", "a_en": "It explains the methods used to gather data, including research tools, surveys, or analytical models.", "a_ar": "يشرح الأساليب المستخدمة لجمع البيانات، بما في ذلك أدوات البحث، الاستطلاعات، أو النماذج التحليلية."}]}, "expected_questions": [{"q_en": "Compare Formal and Informal Communication in an organization.", "q_ar": "قارن بين التواصل الرسمي وغير الرسمي في المؤسسة.", "a_en": "Formal communication follows strict rules and is used for official matters (reports, meetings). Informal communication (grapevine) is casual, allows slang, and helps build social relationships and discover staff grievances.", "a_ar": "التواصل الرسمي يتبع قواعد صارمة ويستخدم للأمور الرسمية. التواصل غير الرسمي (الشائعات) غير رسمي، يسمح بالعامية، ويساعد في بناء العلاقات واكتشاف تظلمات الموظفين."}, {"q_en": "Why is it crucial for a business report to be 'Maintained Neutral'?", "q_ar": "لماذا من الأهمية بمكان أن يكون تقرير العمل 'محايدًا'؟", "a_en": "Because business reports are used for decision-making. If they are biased, they will lead management to make disastrous decisions.", "a_ar": "لأن تقارير الأعمال تُستخدم لاتخاذ القرارات. إذا كانت متحيزة، فستؤدي الإدارة إلى اتخاذ قرارات كارثية."}]}];
     
     // State
     let lang = localStorage.getItem('lang') || 'en';
     let theme = localStorage.getItem('theme') || 'dark';
     let currentLec = null;
+    let timerInt = null; 
+    let time = 1500;
     
     // Dictionaries
     const i18n = {
       en: {
-        nav_dashboard: "Dashboard", nav_lectures: "Lectures", nav_final_exam: "Final Exam",
-        dash_welcome: "Welcome to CommHub", dash_total_lec: "Total Lectures", dash_avg_score: "Avg Quiz Score", dash_streak: "Study Streak", dash_select: "Select a lecture to start",
-        tab_content: "Content", tab_notes: "Simplified Notes", tab_flashcards: "Flashcards", tab_quiz: "Lecture Quiz", tab_expected: "Expected Questions",
-        title_key_concepts: "Key Concepts", title_exam_notes: "Important Exam Notes", title_final_exam: "Comprehensive Final Exam", desc_final_exam: "This exam covers all topics from all lectures. Good luck!",
-        btn_submit: "Submit", score_msg: "Your Score: "
+        nav_dashboard: "Dashboard", nav_lectures: "Study Modules", nav_final_exam: "Final Exam",
+        dash_welcome: "Welcome to CommHub", dash_desc: "Your premium platform to master Communication Skills and ace your exams.",
+        dash_total_lec: "Total Lectures", dash_avg_score: "Avg Quiz Score", dash_streak: "Study Streak", dash_select: "Select a Module to Start",
+        tab_content: "📖 Original Content", tab_notes: "📝 Simplified Notes", tab_flashcards: "🗂️ Flashcards", tab_quiz: "✍️ Practice Quiz", tab_expected: "⭐ Expected Questions",
+        title_key_concepts: "Key Concepts", title_exam_notes: "⚠️ Important Exam Notes", 
+        desc_flashcards: "Click on any card to flip it and reveal the answer.",
+        desc_quiz: "Test your knowledge. Includes Multiple Choice, True/False, and Written Answers (Definitions & Short Answers).",
+        desc_expected: "These questions are highly probable to appear in your exams.",
+        title_final_exam: "Comprehensive Final Exam", desc_final_exam: "This exam covers all topics from all lectures. It simulates the real final exam environment.",
+        btn_submit: "Submit & Grade", score_msg: "Your Score: ", type_answer: "Type your answer here...",
+        model_answer: "Model Answer:"
       },
       ar: {
-        nav_dashboard: "لوحة القيادة", nav_lectures: "المحاضرات", nav_final_exam: "الامتحان النهائي",
-        dash_welcome: "مرحباً بك في CommHub", dash_total_lec: "إجمالي المحاضرات", dash_avg_score: "متوسط درجات الاختبار", dash_streak: "أيام الدراسة المتتالية", dash_select: "اختر محاضرة للبدء",
-        tab_content: "المحتوى", tab_notes: "ملاحظات مبسطة", tab_flashcards: "البطاقات التعليمية", tab_quiz: "اختبار المحاضرة", tab_expected: "أسئلة متوقعة",
-        title_key_concepts: "المفاهيم الأساسية", title_exam_notes: "ملاحظات هامة للامتحان", title_final_exam: "الامتحان النهائي الشامل", desc_final_exam: "هذا الامتحان يغطي جميع المواضيع. حظا سعيدا!",
-        btn_submit: "إرسال", score_msg: "نتيجتك: "
+        nav_dashboard: "لوحة القيادة", nav_lectures: "الوحدات الدراسية", nav_final_exam: "الامتحان النهائي",
+        dash_welcome: "مرحباً بك في CommHub", dash_desc: "منصتك المتميزة لإتقان مهارات التواصل واجتياز امتحاناتك بتفوق.",
+        dash_total_lec: "إجمالي المحاضرات", dash_avg_score: "متوسط درجات الاختبار", dash_streak: "أيام الدراسة المتتالية", dash_select: "اختر وحدة للبدء",
+        tab_content: "📖 المحتوى الأصلي", tab_notes: "📝 ملاحظات مبسطة", tab_flashcards: "🗂️ البطاقات التعليمية", tab_quiz: "✍️ اختبار تدريبي", tab_expected: "⭐ أسئلة متوقعة",
+        title_key_concepts: "المفاهيم الأساسية", title_exam_notes: "⚠️ ملاحظات هامة للامتحان", 
+        desc_flashcards: "انقر على أي بطاقة لقلبها وإظهار الإجابة.",
+        desc_quiz: "اختبر معلوماتك. يتضمن أسئلة خيارات، صح/خطأ، وأسئلة كتابية (تعريفات وأسئلة مقالية قصيرة).",
+        desc_expected: "من المحتمل جداً ظهور هذه الأسئلة في امتحاناتك بناءً على تركيز الدكتور.",
+        title_final_exam: "الامتحان النهائي الشامل", desc_final_exam: "هذا الامتحان يغطي جميع المواضيع. يحاكي بيئة الامتحان النهائي الحقيقي.",
+        btn_submit: "إرسال وتصحيح", score_msg: "نتيجتك: ", type_answer: "اكتب إجابتك هنا...",
+        model_answer: "الإجابة النموذجية:"
       }
     };
     
@@ -311,7 +486,7 @@
     function init() {
       applyTheme(); applyI18n();
       
-      // Build Nav
+      // Build Nav & Dashboard
       const navMenu = $('#navMenu');
       const dashGrid = $('#dashLecturesGrid');
       db.forEach((lec, idx) => {
@@ -326,8 +501,10 @@
         
         // Dash card
         const card = document.createElement('div');
-        card.className = 'glass-card'; card.style.cursor = 'pointer';
-        card.innerHTML = `<h3 style="margin-bottom:0.5rem; color:var(--primary);">${lec.id}</h3><div>${title}</div>`;
+        card.className = 'card'; card.style.cursor = 'pointer'; card.style.transition = 'transform 0.2s';
+        card.onmouseover = () => card.style.transform = 'translateY(-5px)';
+        card.onmouseout = () => card.style.transform = 'translateY(0)';
+        card.innerHTML = `<h3 style="margin-bottom:0.75rem; color:var(--primary); font-size:1.25rem;">${lec.id}</h3><div style="font-weight:600; font-size:1.1rem;">${title}</div>`;
         card.onclick = () => loadLecture(idx, div);
         dashGrid.appendChild(card);
       });
@@ -352,24 +529,21 @@
       });
       
       // Mobile menu
-      if(window.innerWidth <= 768) {
-        $('#openMenu').style.display = 'block'; $('#closeMenu').style.display = 'block';
-        $('#openMenu').onclick = () => $('#sidebar').classList.add('open');
-        $('#closeMenu').onclick = () => $('#sidebar').classList.remove('open');
-      }
+      $('#openMenu').onclick = () => $('#sidebar').classList.add('open');
+      $('#closeMenu').onclick = () => $('#sidebar').classList.remove('open');
       
       // Timer
-      let timerInt; let time = 1500;
       $('#btnTimer').onclick = () => { const m = $('#timerModal'); m.style.display = m.style.display==='none' ? 'block':'none'; };
       $('#btnTimerStart').onclick = () => {
-        if(timerInt) clearInterval(timerInt);
+        if(timerInt) { clearInterval(timerInt); timerInt = null; $('#btnTimerStart').textContent = "Start"; return; }
+        $('#btnTimerStart').textContent = "Pause";
         timerInt = setInterval(() => {
           if(time > 0) time--; else clearInterval(timerInt);
           let m = Math.floor(time/60); let s = time%60;
           $('#timeDisplay').textContent = `${m}:${s<10?'0':''}${s}`;
         }, 1000);
       };
-      $('#btnTimerReset').onclick = () => { clearInterval(timerInt); time = 1500; $('#timeDisplay').textContent = "25:00"; };
+      $('#btnTimerReset').onclick = () => { clearInterval(timerInt); timerInt=null; time = 1500; $('#btnTimerStart').textContent="Start"; $('#timeDisplay').textContent = "25:00"; };
     }
     
     function showPage(pageId, navEl) {
@@ -378,6 +552,7 @@
       $$('.nav-item').forEach(n => n.classList.remove('active'));
       if(navEl) navEl.classList.add('active');
       if(window.innerWidth <= 768) $('#sidebar').classList.remove('open');
+      $('#mainScroll').scrollTo(0,0);
     }
     
     function loadLecture(idx, navEl) {
@@ -392,13 +567,13 @@
       // Concepts
       let conceptsHtml = '';
       currentLec.key_concepts.forEach(c => {
-        conceptsHtml += `<div class="glass-card" style="margin-bottom:1rem; padding:1rem;"><strong style="color:var(--primary); font-size:1.1rem;">${lang==='en'?c.term_en:c.term_ar}</strong><p style="margin-top:0.5rem;">${lang==='en'?c.def_en:c.def_ar}</p></div>`;
+        conceptsHtml += `<div class="concept-card"><strong style="color:var(--primary); font-size:1.2rem; display:block; margin-bottom:0.5rem;">${lang==='en'?c.term_en:c.term_ar}</strong><p style="font-size:1.1rem;">${lang==='en'?c.def_en:c.def_ar}</p></div>`;
       });
       $('#lecConceptsBox').innerHTML = conceptsHtml;
       
       // Exam notes
       let notesArr = lang === 'en' ? currentLec.exam_notes_en : currentLec.exam_notes_ar;
-      $('#lecExamNotesBox').innerHTML = `<ul style="margin-left:1.5rem;">${notesArr.map(n=>`<li style="margin-bottom:0.5rem; font-weight:600;">${n}</li>`).join('')}</ul>`;
+      $('#lecExamNotesBox').innerHTML = notesArr.map(n=>`<li>${n}</li>`).join('');
       
       // Flashcards
       let fcHtml = '';
@@ -417,10 +592,10 @@
       let expHtml = '';
       currentLec.expected_questions.forEach(eq => {
         expHtml += `
-          <div class="glass-card" style="margin-bottom:1rem;">
-            <h4 style="margin-bottom:0.5rem;">${lang==='en'?eq.q_en:eq.q_ar}</h4>
-            <div style="background:rgba(0,0,0,0.05); padding:1rem; border-radius:0.5rem; border-left:4px solid #10b981;">
-              <strong>Answer:</strong> ${lang==='en'?eq.a_en:eq.a_ar}
+          <div class="card" style="padding:1.5rem; margin-bottom:1rem;">
+            <h4 style="margin-bottom:1rem; font-size:1.15rem; color:var(--text);">${lang==='en'?eq.q_en:eq.q_ar}</h4>
+            <div style="background:rgba(16, 185, 129, 0.1); padding:1rem; border-radius:8px; border-left:4px solid var(--accent);">
+              <strong style="color:var(--accent);">${i18n[lang].model_answer}</strong> <span style="font-size:1.05rem;">${lang==='en'?eq.a_en:eq.a_ar}</span>
             </div>
           </div>`;
       });
@@ -429,7 +604,7 @@
       // Quiz
       buildQuiz(currentLec.quizzes, '#lecQuizBox');
       $('#quizResult').textContent = '';
-      $('#btnSubmitQuiz').onclick = () => gradeQuiz(currentLec.quizzes, '#lecQuizBox', '#quizResult');
+      $('#btnSubmitQuiz').onclick = () => gradeQuiz('#lecQuizBox', '#quizResult');
       
       // Reset Tabs
       $$('.tab')[0].click();
@@ -437,12 +612,17 @@
     
     function buildQuiz(quizzes, containerSelector) {
       const c = $(containerSelector); c.innerHTML = '';
-      let index = 0;
       
       // Combine all questions
       let allQ = [];
       if(quizzes.mcq) quizzes.mcq.forEach(q => allQ.push({type:'mcq', ...q}));
       if(quizzes.tf) quizzes.tf.forEach(q => allQ.push({type:'tf', ...q}));
+      // Add written questions (Definitions & Short Answers)
+      if(quizzes.definitions) quizzes.definitions.forEach(q => allQ.push({type:'written', ...q}));
+      if(quizzes.short_answer) quizzes.short_answer.forEach(q => allQ.push({type:'written', ...q}));
+      
+      // Group by type for UI headings
+      let mcqHTML = '', tfHTML = '', writtenHTML = '';
       
       allQ.forEach((q, i) => {
         const qText = lang === 'en' ? q.q_en : q.q_ar;
@@ -455,14 +635,31 @@
           opts.forEach((opt, oi) => {
             html += `<div class="quiz-opt" data-oi="${oi}" onclick="selectOpt(this)">${opt}</div>`;
           });
+          html += `</div><div class="feedback"></div></div>`;
+          mcqHTML += html;
         } else if(q.type === 'tf') {
           html += `<div class="quiz-opt" data-oi="true" onclick="selectOpt(this)">${lang==='en'?'True':'صح'}</div>`;
           html += `<div class="quiz-opt" data-oi="false" onclick="selectOpt(this)">${lang==='en'?'False':'خطأ'}</div>`;
+          html += `</div><div class="feedback"></div></div>`;
+          tfHTML += html;
+        } else if(q.type === 'written') {
+          html += `<textarea class="quiz-textarea" placeholder="${i18n[lang].type_answer}"></textarea>`;
+          html += `</div>
+            <div class="model-answer-box">
+              <strong>${i18n[lang].model_answer}</strong>
+              <div class="model-ans-text"></div>
+            </div>
+          </div>`;
+          writtenHTML += html;
         }
-        
-        html += `</div><div class="feedback" id="fb-${containerSelector.substring(1)}-${i}"></div></div>`;
-        c.innerHTML += html;
       });
+      
+      let finalHTML = '';
+      if(mcqHTML) finalHTML += `<div class="quiz-section-title">Multiple Choice / الاختيارات</div>` + mcqHTML;
+      if(tfHTML) finalHTML += `<div class="quiz-section-title">True or False / صح أم خطأ</div>` + tfHTML;
+      if(writtenHTML) finalHTML += `<div class="quiz-section-title">Written Answers / أسئلة كتابية</div>` + writtenHTML;
+      
+      c.innerHTML = finalHTML;
       c.dataset.qData = JSON.stringify(allQ);
     }
     
@@ -472,60 +669,81 @@
       el.classList.add('selected');
     }
     
-    function gradeQuiz(quizzes, containerSelector, resultSelector) {
+    function gradeQuiz(containerSelector, resultSelector) {
       const c = $(containerSelector);
       const allQ = JSON.parse(c.dataset.qData);
       let score = 0;
+      let totalGradable = 0;
       
       allQ.forEach((q, i) => {
         const block = c.querySelector(`.quiz-q[data-idx="${i}"]`);
-        const sel = block.querySelector('.quiz-opt.selected');
-        const fb = block.querySelector('.feedback');
-        fb.style.display = 'block';
         
-        if(!sel) {
-          fb.innerHTML = `<span style="color:#ef4444;">Not answered.</span>`;
-          return;
-        }
-        
-        const ans = sel.getAttribute('data-oi');
-        let isCorrect = false;
-        if(q.type === 'mcq') {
-          isCorrect = parseInt(ans) === q.answer_index;
-        } else if(q.type === 'tf') {
-          isCorrect = (ans === 'true') === q.answer;
-        }
-        
-        if(isCorrect) {
-          score++;
-          sel.classList.add('correct');
-          fb.innerHTML = `<span style="color:#10b981;">Correct!</span> ${lang==='en'?q.explanation_en:q.explanation_ar}`;
+        if (q.type === 'written') {
+          // Written answers are self-graded / shown for comparison
+          const ansBox = block.querySelector('.model-answer-box');
+          const ansText = block.querySelector('.model-ans-text');
+          ansBox.style.display = 'block';
+          ansText.textContent = lang === 'en' ? q.a_en : q.a_ar;
         } else {
-          sel.classList.add('wrong');
-          fb.innerHTML = `<span style="color:#ef4444;">Incorrect.</span> ${lang==='en'?q.explanation_en:q.explanation_ar}`;
+          totalGradable++;
+          const sel = block.querySelector('.quiz-opt.selected');
+          const fb = block.querySelector('.feedback');
+          fb.style.display = 'block';
+          
+          if(!sel) {
+            fb.innerHTML = `<span style="color:#ef4444; font-weight:bold;">✗ Not answered.</span>`;
+            return;
+          }
+          
+          const ans = sel.getAttribute('data-oi');
+          let isCorrect = false;
+          if(q.type === 'mcq') {
+            isCorrect = parseInt(ans) === q.answer_index;
+          } else if(q.type === 'tf') {
+            isCorrect = (ans === 'true') === q.answer;
+          }
+          
+          if(isCorrect) {
+            score++;
+            sel.classList.add('correct');
+            fb.innerHTML = `<span style="color:#10b981; font-weight:bold;">✓ Correct!</span> <span style="display:block; margin-top:0.5rem;">${lang==='en'?q.explanation_en:q.explanation_ar}</span>`;
+          } else {
+            sel.classList.add('wrong');
+            fb.innerHTML = `<span style="color:#ef4444; font-weight:bold;">✗ Incorrect.</span> <span style="display:block; margin-top:0.5rem;">${lang==='en'?q.explanation_en:q.explanation_ar}</span>`;
+          }
         }
       });
       
-      const pct = Math.round((score / allQ.length) * 100);
-      $(resultSelector).textContent = i18n[lang].score_msg + score + " / " + allQ.length + " (" + pct + "%)";
-      
-      // Update dashboard mock score
-      if(containerSelector === '#lecQuizBox') $('#stat-score').textContent = pct + "%";
+      if(totalGradable > 0) {
+        const pct = Math.round((score / totalGradable) * 100);
+        $(resultSelector).textContent = i18n[lang].score_msg + score + " / " + totalGradable + " (" + pct + "%)";
+        if(containerSelector === '#lecQuizBox') $('#stat-score').textContent = pct + "%";
+      } else {
+        $(resultSelector).textContent = "Please compare your written answers with the model answers provided.";
+      }
     }
     
     function buildFinalExam() {
-      let finalQ = { mcq: [], tf: [] };
+      let finalQ = { mcq: [], tf: [], definitions: [], short_answer: [] };
       db.forEach(lec => {
-        finalQ.mcq.push(...lec.quizzes.mcq);
-        finalQ.tf.push(...lec.quizzes.tf);
+        if(lec.quizzes.mcq) finalQ.mcq.push(...lec.quizzes.mcq);
+        if(lec.quizzes.tf) finalQ.tf.push(...lec.quizzes.tf);
+        if(lec.quizzes.definitions) finalQ.definitions.push(...lec.quizzes.definitions);
+        if(lec.quizzes.short_answer) finalQ.short_answer.push(...lec.quizzes.short_answer);
       });
       // Shuffle
       finalQ.mcq = finalQ.mcq.sort(() => 0.5 - Math.random());
       finalQ.tf = finalQ.tf.sort(() => 0.5 - Math.random());
+      // Limit to a reasonable number for final
+      finalQ.definitions = finalQ.definitions.slice(0, 3);
+      finalQ.short_answer = finalQ.short_answer.slice(0, 3);
       
       buildQuiz(finalQ, '#finalQuizBox');
       $('#finalQuizResult').textContent = '';
-      $('#btnSubmitFinal').onclick = () => gradeQuiz(finalQ, '#finalQuizBox', '#finalQuizResult');
+      $('#btnSubmitFinal').onclick = () => {
+        gradeQuiz('#finalQuizBox', '#finalQuizResult');
+        window.scrollTo(0, document.body.scrollHeight);
+      };
     }
 
     window.onload = init;
